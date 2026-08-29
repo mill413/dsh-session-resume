@@ -16,12 +16,12 @@ export const resumeProducerName = 'session-resume'
 
 /** Model-facing continuation instruction, pinned verbatim. */
 const RESUME_CONTENT =
-  'The previous turn was interrupted because the Harness restarted. Continue where you left off. '
+  'The previous turn was interrupted. Continue where you left off. '
   + 'For any tool call that was interrupted, retry it only if it is read-only or idempotent; '
   + 'otherwise verify the external state before proceeding.'
 
 /** Short collapsed-transcript summary for the same message. */
-const RESUME_SUMMARY = 'Interrupted by a restart — continue'
+const RESUME_SUMMARY = 'Interrupted — continue'
 
 /**
  * Build the plugin-origin notice that asks the model to continue the
