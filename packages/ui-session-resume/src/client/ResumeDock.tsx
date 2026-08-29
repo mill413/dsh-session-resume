@@ -1,0 +1,62 @@
+/**
+ * ResumeDock: the continue strip docked above the message composer (input dock
+ * strip). A session that was torn by a restart shows a short label and a
+ * "Continue" button; clicking it asks the host to nudge the model to keep
+ * going from the interrupted turn. Live state arrives as the projected
+ * `sessionResume` snapshot; the resume verb is the injected face. Loading
+ * (undefined), not-interrupted (null), and already-continued states render
+ * nothing.
+ */
+
+import { useCallback, useState } from 'react'
+import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
+import type { ResumeActionResult, ResumeDockActions } from './slots.ts'
+import type { ResumeKey } from './locales.ts'
+import css from './ResumeDock.module.css'
+
+export interface ResumeDockBarProps extends ResumeDockActions {
+  /** The interrupted turn number to resume, or `null`/`undefined` for no strip. */
+  interruptedTurn: number | null | undefined
+}
+
+/** Strip presentation: label + resume button, visible only for a pending interrupted turn. */
+export function ResumeDockBar({ interruptedTurn, onResume, t }: ResumeDockBarProps & PropsLocale<'session-resume'>) {
+  const [pending, setPending] = useState(false)
+  const [actionError, setActionError] = useState<string | null>(null)
+
+  const runResume = useCallback(async () => {
+    if (pending) return
+    setPending(true)
+    setActionError(null)
+    let result: ResumeActionResult
+    try {
+      result = await onResume()
+    } catch (error: unknown) {
+      setPending(false)
+      setActionError(String(error))
+      return
+    }
+    setPending(false)
+    if (!result.ok) setActionError(`${result.error.message} (${result.error.code})`)
+  }, [pending, onResume])
+
+  if (interruptedTurn === undefined || interruptedTurn === null) return null
+
+  return (
+    <div className={css.dock} data-session-resume-dock>
+      <div className={css.bar}>
+        <span className={css.label}>{t('interrupted.label')}</span>
+        {actionError !== null && <span className={css.error} role="alert">{actionError}</span>}
+        <button
+          type="button"
+          className={css.resumeBtn}
+          disabled={pending}
+          onClick={() => { void runResume() }}
+          aria-label={t('action.resume.aria')}
+        >
+          {t('action.resume')}
+        </button>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,40 @@
+.dock {
+  display: flex;
+  align-items: center;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--dsw-surface-subtle, rgba(128, 128, 128, 0.12));
+  color: var(--dsw-text-secondary, #888);
+  font-size: 13px;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.error {
+  color: var(--dsw-color-danger, #d64541);
+  font-size: 12px;
+}
+
+.resumeBtn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 3px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--dsw-accent, #4c8dff);
+  color: #fff;
+}
+
+.resumeBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "dsh-session-resume",
+  "private": true,
+  "type": "module",
+  "description": "DSH plugin: an interrupted (restart-torn) session shows a 'continue' button; clicking it resumes the turn without the user typing a message.",
+  "scripts": {
+    "build": "npm run build:host && npm run build:client",
+    "build:host": "tsc -p packages/session-resume/tsconfig.json && cd packages/session-resume && tsdown",
+    "build:client": "tsc -p packages/ui-session-resume/tsconfig.json && cd packages/ui-session-resume && tsdown",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": "^22.19 || >=24"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.0",
+    "lightningcss": "^1.29.0",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vite": "^7.0.0"
+  }
+}

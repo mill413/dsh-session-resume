@@ -1,0 +1,7 @@
+# The session-resume bundle patch: installs the host sessionResume service
+# row (projection provider + remote action). Applied after the profile's base
+# bundles; the Web surface row for the continue button ships in the
+# ui-session-resume package's own patch.
+- insert:
+    - id: session-resume
+      name: '@deepseek-ai/dsh-session-resume'

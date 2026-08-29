@@ -1,0 +1,75 @@
+packages:
+  - packages/*
+  # deepseek-harness module tier as workspace members, mirroring the harness's own
+  # `packages/*/*` glob minus the `bundle/*` group (its web-app member references
+  # the built `dsh-web-frontend` artifact, not a package). Members are linked,
+  # never built here. Omitting `apps/*`/`website`/`python/*` keeps this closure to
+  # the module tier, which is what plugin host/client packages reference.
+  - ../deepseek-harness/vendor/*
+  - ../deepseek-harness/apps/*
+  - ../deepseek-harness/packages/acp/*
+  - ../deepseek-harness/packages/api/*
+  - ../deepseek-harness/packages/attachment/*
+  - ../deepseek-harness/packages/boot/*
+  - ../deepseek-harness/packages/client/*
+  - ../deepseek-harness/packages/code-runtime/*
+  - ../deepseek-harness/packages/compaction/*
+  - ../deepseek-harness/packages/context/*
+  - ../deepseek-harness/packages/core/*
+  - ../deepseek-harness/packages/credentials/*
+  - ../deepseek-harness/packages/e2b/*
+  - ../deepseek-harness/packages/examples/*
+  - ../deepseek-harness/packages/experimental/*
+  - ../deepseek-harness/packages/extensions/*
+  - ../deepseek-harness/packages/feedback/*
+  - ../deepseek-harness/packages/fs/*
+  - ../deepseek-harness/packages/goal/*
+  - ../deepseek-harness/packages/guard/*
+  - ../deepseek-harness/packages/hooks/*
+  - ../deepseek-harness/packages/host/*
+  - ../deepseek-harness/packages/identity/*
+  - ../deepseek-harness/packages/interaction/*
+  - ../deepseek-harness/packages/jobs/*
+  - ../deepseek-harness/packages/llm/*
+  - ../deepseek-harness/packages/lsp/*
+  - ../deepseek-harness/packages/mcp/*
+  - ../deepseek-harness/packages/plan/*
+  - ../deepseek-harness/packages/preset/*
+  - ../deepseek-harness/packages/runtime-diagnostics/*
+  - ../deepseek-harness/packages/sandbox/*
+  - ../deepseek-harness/packages/schedule/*
+  - ../deepseek-harness/packages/sdk/*
+  - ../deepseek-harness/packages/session/*
+  - ../deepseek-harness/packages/session-query/*
+  - ../deepseek-harness/packages/settings/*
+  - ../deepseek-harness/packages/shell/*
+  - ../deepseek-harness/packages/skill/*
+  - ../deepseek-harness/packages/spill/*
+  - ../deepseek-harness/packages/storage/*
+  - ../deepseek-harness/packages/subagent/*
+  - ../deepseek-harness/packages/subprocess/*
+  - ../deepseek-harness/packages/terminal/*
+  - ../deepseek-harness/packages/test-support/*
+  - ../deepseek-harness/packages/todo/*
+  - ../deepseek-harness/packages/typert/*
+  - ../deepseek-harness/packages/util/*
+  - ../deepseek-harness/packages/web/*
+  - ../deepseek-harness/packages/webhook/*
+  - ../deepseek-harness/packages/workflow/*
+  - ../deepseek-harness/packages/workspace/*
+  - ../deepseek-harness/native/landlock-run
+  - ../deepseek-harness/native/landlock-run/packages/*
+
+linkWorkspacePackages: true
+
+overrides:
+  '@deepseek-ai/cosmokit': 'link:../deepseek-harness/vendor/cosmokit'
+  '@deepseek-ai/schemastery': 'link:../deepseek-harness/vendor/schemastery'
+
+peerDependencyRules:
+  allowedVersions:
+    typescript: '>=5 <7'
+
+onlyBuiltDependencies:
+  - esbuild
+  - koffi

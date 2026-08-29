@@ -1,0 +1,5 @@
+# The ui-session-resume bundle patch: installs the composer dock's continue
+# strip row. Depends on the session-resume host bundle's service row.
+- insert:
+    - id: ui-session-resume
+      name: '@deepseek-ai/dsh-client-ui-session-resume'
