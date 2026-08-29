@@ -16,11 +16,18 @@ import type {} from '@deepseek-ai/dsh-session-projection'
 import { HarnessError } from '@deepseek-ai/dsh-llm'
 import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol'
 import type { Session, SessionId } from '@deepseek-ai/dsh-session'
+import sz from '@deepseek-ai/schemastery'
 import { z as zod } from 'zod'
 import type { ZodType } from 'zod'
 import { applySessionResumeProjection, InitialSessionResumeProjection } from './projection.ts'
 import { buildResumeMessage } from './resume.ts'
 import type { SessionResumeProjection, SessionResumeSuccess } from './types.ts'
+
+/** Plugin config schema; empty — the feature is always-on when mounted. */
+export interface Config {}
+
+/** Schemastery config schema (Cordis requires one on Service plugins). */
+export const Config: sz<Config> = sz.object({})
 
 /** Wire/state schema for the `sessionResume` projection; plain JSON. */
 const sessionResumeProjectionSchema: ZodType<SessionResumeProjection> = zod.object({
@@ -40,6 +47,8 @@ declare module '@deepseek-ai/cordis' {
 /** Session-resume service (`ctx.sessionResume`). */
 export class SessionResumeService extends TypertRemoteService {
   static inject = ['agents']
+
+  static Config: sz<Config> = Config
 
   constructor(ctx: Context) {
     super(ctx, 'sessionResume')

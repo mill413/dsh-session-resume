@@ -6,6 +6,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render } from '@testing-library/react'
 import { ResumeDockBar } from '../src/client/ResumeDock.tsx'
+import { inject } from '../src/client/index.ts'
 import type { ResumeActionResult } from '../src/client/slots.ts'
 import { zh } from '../src/client/locales.ts'
 
@@ -16,6 +17,10 @@ const t = (key: keyof typeof zh): string => zh[key]
 const okResult: ResumeActionResult = { ok: true, value: { resumedTurn: 7 } }
 
 describe('ResumeDockBar', () => {
+  it('declares the remote service before apply mounts its generated namespace', () => {
+    expect(inject).toEqual(['remote'])
+  })
+
   it('renders nothing for loading (undefined) and not-interrupted (null) states', () => {
     const onResume = vi.fn(() => Promise.resolve(okResult))
     const { container } = render(<ResumeDockBar interruptedTurn={undefined} onResume={onResume} t={t} />)

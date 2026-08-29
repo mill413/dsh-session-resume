@@ -1,37 +1,83 @@
+/* ResumeDock: the composer-stack card that offers to continue a torn turn.
+   Styled as a sibling of GoalBar/Todo/Queue so the strip reads as one family:
+   the same dock width, 36px bar, `--dsw-specific-tip` surface, 12px radius,
+   and the shared label/primary-button aliases. */
+
 .dock {
-  display: flex;
-  align-items: center;
+  box-sizing: border-box;
+  width: calc(
+    100% -
+    var(--dsh-composer-side-clearance) -
+    var(--dsh-composer-side-clearance) -
+    var(--dsh-composer-dock-inset) -
+    var(--dsh-composer-dock-inset) -
+    var(--dsh-composer-dock-inset) -
+    var(--dsh-composer-dock-inset)
+  );
+  margin: 0 auto;
 }
 
 .bar {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 10px;
-  border-radius: 8px;
-  background: var(--dsw-surface-subtle, rgba(128, 128, 128, 0.12));
-  color: var(--dsw-text-secondary, #888);
-  font-size: 13px;
+  width: 100%;
+  max-width: calc(var(--dsh-composer-card-max-width) - 4 * var(--dsh-composer-dock-inset));
+  height: 36px;
+  margin: 0 auto;
+  padding: 4px 5px 4px 12px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 12px;
+  background: var(--dsw-specific-tip);
 }
 
+.icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--dsw-alias-state-success-primary);
+}
+
+/* Matches the Todo/Queue/GoalBar panel titles (13/24 medium, primary). */
 .label {
-  white-space: nowrap;
+  flex: none;
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-primary);
+}
+
+.spacer {
+  flex: 1;
 }
 
 .error {
-  color: var(--dsw-color-danger, #d64541);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--dsw-alias-state-error-primary);
   font-size: 12px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* Filled primary button, aligned with the GoalBar icon-action row. */
 .resumeBtn {
-  appearance: none;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding: 3px 12px;
+  flex: none;
+  height: 26px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 999px;
+  background: var(--dsw-alias-button-primary-fill);
+  color: var(--dsw-alias-label-primary-foreground);
   font-size: 13px;
+  line-height: 26px;
   cursor: pointer;
-  background: var(--dsw-accent, #4c8dff);
-  color: #fff;
+}
+
+.resumeBtn:hover:not(:disabled) {
+  background: var(--dsw-alias-button-primary-hover);
 }
 
 .resumeBtn:disabled {

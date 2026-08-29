@@ -45,6 +45,9 @@ const NS = 'session-resume'
 /** Services the surface needs; the remote namespace is mounted before this inject runs. */
 const SURFACE_INJECT = ['slots', 'locale', 'remote', 'remote.sessionResume', 'uiConversation']
 
+/** Required before this plugin can mount its generated Remote contribution. */
+export const inject = ['remote']
+
 /** The one Remote call the strip needs. */
 export type SessionResumeRemote = {
   resume: (sessionId: SessionId) => Promise<ResumeActionResult>
