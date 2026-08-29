@@ -97,13 +97,21 @@ None; the request composition is unchanged.
 ## Development
 
 ```sh
-pnpm install            # workspace install (needs a writable pnpm store)
+pnpm install            # workspace install; the repo mirrors the deepseek-harness
+                        # module tier (checked out as ../deepseek-harness) so every
+                        # `workspace:*` reference resolves locally
 pnpm run build          # host: tsc + tsdown + typert; client: tsc + tsdown clientBundle
 pnpm test               # host fold/resume-message + Web dock component tests
 ```
 
 The host projection fold is pure and unit-tested in
 `packages/session-resume/tests/projection.spec.ts`.
+
+The `pnpm-workspace.yaml` mirrors the Harness's own package globs
+(`vendor/*`, `packages/*/*`, `apps/*`, `website`, `python/sdk-runtime`,
+`native/landlock-run`) so this repo can build a plugin against a sibling
+`../deepseek-harness` checkout. To build against a different checkout location,
+update those globs and the two `overrides` entries.
 
 ## Known Limitations and Deferred Work
 

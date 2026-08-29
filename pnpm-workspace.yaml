@@ -1,64 +1,15 @@
 packages:
   - packages/*
-  # deepseek-harness module tier as workspace members, mirroring the harness's own
-  # `packages/*/*` glob minus the `bundle/*` group (its web-app member references
-  # the built `dsh-web-frontend` artifact, not a package). Members are linked,
-  # never built here. Omitting `apps/*`/`website`/`python/*` keeps this closure to
-  # the module tier, which is what plugin host/client packages reference.
+  # deepseek-harness full workspace, mirrored so every `workspace:*`/`file:` ref
+  # inside the harness members resolves here. Members are linked, never built in
+  # this repo; the plugin host/client packages are the ones built.
   - ../deepseek-harness/vendor/*
-  - ../deepseek-harness/apps/*
-  - ../deepseek-harness/packages/acp/*
-  - ../deepseek-harness/packages/api/*
-  - ../deepseek-harness/packages/attachment/*
-  - ../deepseek-harness/packages/boot/*
-  - ../deepseek-harness/packages/client/*
-  - ../deepseek-harness/packages/code-runtime/*
-  - ../deepseek-harness/packages/compaction/*
-  - ../deepseek-harness/packages/context/*
-  - ../deepseek-harness/packages/core/*
-  - ../deepseek-harness/packages/credentials/*
-  - ../deepseek-harness/packages/e2b/*
-  - ../deepseek-harness/packages/examples/*
-  - ../deepseek-harness/packages/experimental/*
-  - ../deepseek-harness/packages/extensions/*
-  - ../deepseek-harness/packages/feedback/*
-  - ../deepseek-harness/packages/fs/*
-  - ../deepseek-harness/packages/goal/*
-  - ../deepseek-harness/packages/guard/*
-  - ../deepseek-harness/packages/hooks/*
-  - ../deepseek-harness/packages/host/*
-  - ../deepseek-harness/packages/identity/*
-  - ../deepseek-harness/packages/interaction/*
-  - ../deepseek-harness/packages/jobs/*
-  - ../deepseek-harness/packages/llm/*
-  - ../deepseek-harness/packages/lsp/*
-  - ../deepseek-harness/packages/mcp/*
-  - ../deepseek-harness/packages/plan/*
-  - ../deepseek-harness/packages/preset/*
-  - ../deepseek-harness/packages/runtime-diagnostics/*
-  - ../deepseek-harness/packages/sandbox/*
-  - ../deepseek-harness/packages/schedule/*
-  - ../deepseek-harness/packages/sdk/*
-  - ../deepseek-harness/packages/session/*
-  - ../deepseek-harness/packages/session-query/*
-  - ../deepseek-harness/packages/settings/*
-  - ../deepseek-harness/packages/shell/*
-  - ../deepseek-harness/packages/skill/*
-  - ../deepseek-harness/packages/spill/*
-  - ../deepseek-harness/packages/storage/*
-  - ../deepseek-harness/packages/subagent/*
-  - ../deepseek-harness/packages/subprocess/*
-  - ../deepseek-harness/packages/terminal/*
-  - ../deepseek-harness/packages/test-support/*
-  - ../deepseek-harness/packages/todo/*
-  - ../deepseek-harness/packages/typert/*
-  - ../deepseek-harness/packages/util/*
-  - ../deepseek-harness/packages/web/*
-  - ../deepseek-harness/packages/webhook/*
-  - ../deepseek-harness/packages/workflow/*
-  - ../deepseek-harness/packages/workspace/*
+  - ../deepseek-harness/packages/*/*
   - ../deepseek-harness/native/landlock-run
   - ../deepseek-harness/native/landlock-run/packages/*
+  - ../deepseek-harness/apps/*
+  - ../deepseek-harness/website
+  - ../deepseek-harness/python/sdk-runtime
 
 linkWorkspacePackages: true
 
@@ -70,6 +21,36 @@ peerDependencyRules:
   allowedVersions:
     typescript: '>=5 <7'
 
-onlyBuiltDependencies:
-  - esbuild
-  - koffi
+allowBuilds:
+  esbuild: true
+  lefthook: true
+  node-pty: true
+  '@google/genai': false
+  protobufjs: false
+  node-addon-require-builtin: false
+  koffi: true
+
+minimumReleaseAgeExclude:
+  - '@earendil-works/pi-ai@0.84.2'
+  - node-addon-native-custom-loader@0.1.4
+  - node-addon-require-builtin-darwin-arm64@0.1.4
+  - node-addon-require-builtin-darwin-x64@0.1.4
+  - node-addon-require-builtin-linux-arm64-gnu@0.1.4
+  - node-addon-require-builtin-linux-x64-gnu@0.1.4
+  - node-addon-require-builtin-win32-arm64-msvc@0.1.4
+  - node-addon-require-builtin-win32-ia32-msvc@0.1.4
+  - node-addon-require-builtin-win32-x64-msvc@0.1.4
+  - node-addon-require-builtin@0.1.4
+  - '@anthropic-ai/claude-agent-sdk-darwin-arm64@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk-darwin-x64@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk-linux-arm64-musl@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk-linux-arm64@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk-linux-x64-musl@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk-linux-x64@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk-win32-arm64@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk-win32-x64@0.3.241'
+  - '@anthropic-ai/claude-agent-sdk@0.3.241'
+  - '@openai/codex@0.149.1||0.149.1-darwin-arm64||0.149.1-darwin-x64||0.149.1-linux-arm64||0.149.1-linux-x64||0.149.1-win32-arm64||0.149.1-win32-x64'
+
+patchedDependencies:
+  node-pty@1.2.0-beta.15: patches/node-pty@1.2.0-beta.15.patch

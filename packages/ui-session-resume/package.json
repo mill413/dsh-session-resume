@@ -76,6 +76,7 @@
     "@deepseek-ai/dsh-session": "workspace:*",
     "@deepseek-ai/dsh-session-resume": "workspace:*",
     "@deepseek-ai/dsh-typert-protocol": "workspace:*",
+    "@testing-library/react": "^16.1.0",
     "@types/react": "~18.3.1",
     "jsdom": "^26.0.0",
     "lightningcss": "^1.29.0",

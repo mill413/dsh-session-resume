@@ -9,9 +9,8 @@
  */
 
 import { useCallback, useState } from 'react'
-import type { PropsLocale } from '@deepseek-ai/dsh-client-ui-slots'
+import type { PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import type { ResumeActionResult, ResumeDockActions } from './slots.ts'
-import type { ResumeKey } from './locales.ts'
 import css from './ResumeDock.module.css'
 
 export interface ResumeDockBarProps extends ResumeDockActions {
@@ -59,4 +58,14 @@ export function ResumeDockBar({ interruptedTurn, onResume, t }: ResumeDockBarPro
       </div>
     </div>
   )
+}
+
+/** Full props of the dock entry: Runtime share + injected verbs + the locale seat. */
+export type ResumeDockProps = PropsRuntime<'conversation.input.dock'> & ResumeDockActions & PropsLocale<'session-resume'>
+
+/** Dock adapter: reads the host-computed `sessionResume` projection (absent or null renders nothing). */
+export function ResumeDock({ useProjection, onResume, t }: ResumeDockProps) {
+  const projection = useProjection('sessionResume')
+  const interruptedTurn = projection === undefined ? undefined : projection.interruptedTurn
+  return <ResumeDockBar interruptedTurn={interruptedTurn} onResume={onResume} t={t} />
 }

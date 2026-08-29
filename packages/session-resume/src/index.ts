@@ -9,13 +9,13 @@
  * @module @deepseek-ai/dsh-session-resume
  */
 
-import { Context, Service } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
+import { Context } from '@deepseek-ai/cordis'
+import type {} from '@deepseek-ai/dsh-agent'
 import type {} from '@deepseek-ai/dsh-session'
 import type {} from '@deepseek-ai/dsh-session-projection'
 import { HarnessError } from '@deepseek-ai/dsh-llm'
 import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol'
-import type { Session } from '@deepseek-ai/dsh-session'
+import type { Session, SessionId } from '@deepseek-ai/dsh-session'
 import { z as zod } from 'zod'
 import type { ZodType } from 'zod'
 import { applySessionResumeProjection, InitialSessionResumeProjection } from './projection.ts'
@@ -59,16 +59,19 @@ export class SessionResumeService extends TypertRemoteService {
   }
 
   /**
-   * Ask one live agent to continue the crash-interrupted turn it stopped on.
-   * @param agent - exact live Agent resolved from the wire identity.
+   * Ask the live agent for one session to continue the crash-interrupted turn
+   * it stopped on. The agent is resolved from the wire session identity, so the
+   * client never receives a live-agent handle directly.
+   * @param sessionId - the wire session identity.
    * @returns the resumed turn number.
-   * @throws {@link HarnessError} when the agent is not live or the session has
-   *   no pending interrupted turn.
+   * @throws {@link HarnessError} when the agent for the session is not live or
+   *   the session has no pending interrupted turn.
    */
   @Remote('resume')
-  resume(agent: Agent): SessionResumeSuccess {
-    if (this.ctx.agents.get(agent.id) !== agent) {
-      throw new HarnessError('agent is not live in this registry', 'AGENT_NOT_LIVE')
+  resume(sessionId: SessionId): SessionResumeSuccess {
+    const agent = this.ctx.agents.get(sessionId)
+    if (agent === undefined) {
+      throw new HarnessError('no live agent for the session', 'AGENT_NOT_LIVE')
     }
     const interruptedTurn = interruptedTurnOf(agent.session)
     if (interruptedTurn === null) {

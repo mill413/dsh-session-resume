@@ -25,10 +25,10 @@ import type {} from '@deepseek-ai/dsh-session-resume/client'
 // Runtime: the generated remote namespace, mounted onto ctx.remote.
 import TYPERT_REMOTE from '@deepseek-ai/dsh-session-resume/remote'
 import type { ResumeActionResult, ResumeDockActions } from './slots.ts'
-import { ResumeDockBar } from './ResumeDock.tsx'
+import { ResumeDock } from './ResumeDock.tsx'
 import { en, zh, type ResumeKey } from './locales.ts'
 
-export { ResumeDockBar } from './ResumeDock.tsx'
+export { ResumeDock } from './ResumeDock.tsx'
 export type { ResumeActionResult, ResumeDockActions } from './slots.ts'
 export type { ResumeKey } from './locales.ts'
 
@@ -59,9 +59,14 @@ export type SessionResumeRemote = {
 export async function apply(ctx: ClientContext): Promise<() => Promise<void>> {
   const disposeRemote = await ctx.remote.$mount(TYPERT_REMOTE)
   const surface = ctx.inject(SURFACE_INJECT, applySurface)
+  try {
+    await surface
+  } catch (error) {
+    await disposeRemote()
+    throw error
+  }
   return async () => {
-    const disposeSurface = await surface
-    disposeSurface()
+    await surface.dispose()
     await disposeRemote()
   }
 }
@@ -78,15 +83,4 @@ function applySurface(ctx: ClientContext): void {
       onResume: async () => await ctx.remote.sessionResume.resume(sessionId),
     }),
   }, ResumeDock))
-}
-
-/**
- * Dock adapter: reads the host-computed `sessionResume` projection (absent or
- * null renders nothing) and hands the pending turn number to the strip.
- */
-export function ResumeDock(props: import('@deepseek-ai/dsh-client-ui-slots').PropsRuntime<'conversation.input.dock'> & ResumeDockActions & import('@deepseek-ai/dsh-client-ui-slots').PropsLocale<'session-resume'>) {
-  const { useProjection, onResume, t } = props
-  const projection = useProjection('sessionResume')
-  const interruptedTurn = projection === undefined ? undefined : projection.interruptedTurn
-  return <ResumeDockBar interruptedTurn={interruptedTurn} onResume={onResume} t={t} />
 }
