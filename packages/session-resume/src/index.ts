@@ -94,7 +94,7 @@ export class SessionResumeService extends TypertRemoteService {
 /** Fold the live session log to its current interrupted-turn mark. */
 function interruptedTurnOf(session: Session): number | null {
   let state: SessionResumeProjection = InitialSessionResumeProjection
-  for (const event of session.events) {
+  for (const event of session.snapshotEvents()) {
     state = applySessionResumeProjection(state, event)
   }
   return state.interruptedTurn
