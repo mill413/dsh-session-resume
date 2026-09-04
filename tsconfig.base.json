@@ -160,10 +160,10 @@
       "@deepseek-ai/dsh-llm/brand": [
         "../deepseek-harness/packages/llm/llm/src/brand.ts"
       ],
-      "@deepseek-ai/dsh-session-resume/types": [
+      "@mill413/dsh-session-resume/types": [
         "./packages/session-resume/src/types.ts"
       ],
-      "@deepseek-ai/dsh-session-resume/client": [
+      "@mill413/dsh-session-resume/client": [
         "./packages/session-resume/src/client.ts"
       ],
       "@deepseek-ai/dsh-llm-retry/types": [
@@ -433,7 +433,7 @@
       "@deepseek-ai/dsh-client-ui-message-feedback": [
         "../deepseek-harness/packages/client/ui-message-feedback/src"
       ],
-      "@deepseek-ai/dsh-client-ui-session-resume": [
+      "@mill413/dsh-client-ui-session-resume": [
         "./packages/ui-session-resume/src/index.ts"
       ],
       "@deepseek-ai/dsh-client-ui-agent-preset": [
@@ -545,13 +545,13 @@
         "../deepseek-harness/packages/host/*/src",
         "../deepseek-harness/packages/client/*/src"
       ],
-      "@deepseek-ai/dsh-session-resume": [
+      "@mill413/dsh-session-resume": [
         "./packages/session-resume/src/index.ts"
       ],
-      "@deepseek-ai/dsh-session-resume/remote": [
+      "@mill413/dsh-session-resume/remote": [
         "./packages/session-resume/src/index.ts"
       ],
-      "@deepseek-ai/dsh-client-ui-session-resume/client": [
+      "@mill413/dsh-client-ui-session-resume/client": [
         "./packages/ui-session-resume/src/client/index.ts"
       ]
     }

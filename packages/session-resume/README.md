@@ -1,11 +1,11 @@
-# @deepseek-ai/dsh-session-resume
+# @mill413/dsh-session-resume
 
 A DSH plugin that surfaces a **Continue** button when a session was interrupted
 mid-turn, and only on click asks the model to pick up where the interrupted turn
 left off.
 
-When the Harness process dies mid-turn (a `systemctl restart dsh-web`, an OOM
-kill, a crash), the durable session log ends on an orphaned `turn/start`. On the
+When the Harness process dies mid-turn (a restart, an OOM kill, a crash), the durable
+session log ends on an orphaned `turn/start`. On the
 next cold load the session-persistence layer repairs that torn log by closing it
 with a synthetic `turn/end { reason: { kind: 'interrupted' } }`. The session is
 resumed but the harness does not auto-continue it, so the user has to act.
@@ -17,9 +17,9 @@ continues automatically.
 
 ## Packages
 
-- `packages/session-resume` — `@deepseek-ai/dsh-session-resume` (host): registers
+- `packages/session-resume` — `@mill413/dsh-session-resume` (host): registers
   the `sessionResume` session projection and the `@Remote('resume')` action.
-- `packages/ui-session-resume` — `@deepseek-ai/dsh-client-ui-session-resume`
+- `packages/ui-session-resume` — `@mill413/dsh-client-ui-session-resume`
   (Web client): the composer-dock continue strip.
 - `packages/typert-protocol` — the Typert Remote protocol the generator needs.
 
@@ -68,23 +68,36 @@ rule). The model-facing continuation text and its collapsed summary are pinned i
 
 ## Install
 
-Install the host and UI packages into the `web` profile from the harness checkout
-(the `dsh` CLI anchors relative paths, applies each package's `dsh.bundle` patch,
-and reconciles the profile's bundle layer stack):
+Install the host and UI packages into a DSH profile (the `dsh` CLI anchors the package
+path/name, applies each package's `dsh.bundle` patch, and reconciles the profile's
+bundle layer stack). Host and UI are two separate packages, so both must be added to
+the same profile.
+
+From a local source checkout — build the plugin first (see [Development](#development)),
+then add each package by path from the harness checkout:
 
 ```sh
-cd /home/haruto/Documents/Code/dsh/deepseek-harness
-pnpm dsh plugin --profile web add ../dsh-session-resume/packages/session-resume
-pnpm dsh plugin --profile web add ../dsh-session-resume/packages/ui-session-resume
+pnpm run build
+
+cd <harness-checkout>
+pnpm dsh plugin --profile web add <path-to-dsh-session-resume>/packages/session-resume
+pnpm dsh plugin --profile web add <path-to-dsh-session-resume>/packages/ui-session-resume
 ```
 
-Both run `pnpm add` in `$DSH_HOME/profiles/web` and add the packages to the
-profile's `dsh.profile.bundles`. The profile links the packages by path, so after
-rebuilding the plugin `lib/` a restart picks up the changes:
+From a published npm package once released, install by name:
 
 ```sh
-systemctl --user restart dsh-web.service   # see the workspace AGENTS.md
+dsh plugin --profile web add @mill413/dsh-session-resume
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
 ```
+
+Both `add` commands run `pnpm add` in `$DSH_HOME/profiles/web` and add the packages to
+the profile's `dsh.profile.bundles`. The profile links the packages by path, so after
+rebuilding the plugin `lib/` a restart picks up the changes — **restart the DSH web
+process** (however you run it, `dsh web` or a service manager) so the new bundle loads.
+Do **not** hand-insert the plugin into `$DSH_HOME/profiles/web/cordis.patch.yml` — the
+shipped `cordis.patch.yml` already composes the row and a duplicate insert will fail
+the loader.
 
 ## Development
 

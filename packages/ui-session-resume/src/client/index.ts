@@ -21,9 +21,9 @@ import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 // Type-only: pulls the Session standard useProjection seat.
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 // Type-only: the `sessionResume` SessionProjectionMap key merge (single source, the domain's pure outlet).
-import type {} from '@deepseek-ai/dsh-session-resume/client'
+import type {} from '@mill413/dsh-session-resume/client'
 // Runtime: the generated remote namespace, mounted onto ctx.remote.
-import TYPERT_REMOTE from '@deepseek-ai/dsh-session-resume/remote'
+import TYPERT_REMOTE from '@mill413/dsh-session-resume/remote'
 import type { ResumeActionResult, ResumeDockActions } from './slots.ts'
 import { ResumeDock } from './ResumeDock.tsx'
 import { en, zh, type ResumeKey } from './locales.ts'

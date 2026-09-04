@@ -6,7 +6,7 @@
  * there is no automatic continuation, and the agent is only nudged when the
  * durable log still ends on an interrupted turn.
  *
- * @module @deepseek-ai/dsh-session-resume
+ * @module @mill413/dsh-session-resume
  */
 
 import { Context } from '@deepseek-ai/cordis'

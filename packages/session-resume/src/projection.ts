@@ -7,7 +7,7 @@
  * it. The next `turn/start` records that a continuation was committed (or the
  * user typed a new message) and clears the pending mark.
  *
- * @module @deepseek-ai/dsh-session-resume/projection
+ * @module @mill413/dsh-session-resume/projection
  */
 
 import type { SessionEvent } from '@deepseek-ai/dsh-session'

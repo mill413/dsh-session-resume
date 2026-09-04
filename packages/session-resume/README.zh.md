@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-session-resume
+# @mill413/dsh-session-resume
 
 一个 DeepSeek Harness 插件：当会话在 turn 进行中被中断（Harness 进程死亡——重启、OOM、崩溃），
 Web 客户端会显示一个 **继续** 按钮，点击后让模型接着被打断的 turn 继续工作——无需手动发送
@@ -13,9 +13,9 @@ Web 客户端会显示一个 **继续** 按钮，点击后让模型接着被打�
 
 ## 组成
 
-- `packages/session-resume` — `@deepseek-ai/dsh-session-resume`（宿主）：注册
+- `packages/session-resume` — `@mill413/dsh-session-resume`（宿主）：注册
   `sessionResume` 会话投影与 `@Remote('resume')` 动作。
-- `packages/ui-session-resume` — `@deepseek-ai/dsh-client-ui-session-resume`（Web 客户端）：
+- `packages/ui-session-resume` — `@mill413/dsh-client-ui-session-resume`（Web 客户端）：
   composer 上方的继续停靠条。
 - `packages/typert-protocol` — Typert Remote 协议（workspace 副本）。
 
@@ -51,21 +51,30 @@ Web 客户端会显示一个 **继续** 按钮，点击后让模型接着被打�
 
 ## 安装
 
-在 harness 检出目录把宿主与 UI 包通过插件命令装进 `web` profile（`dsh` CLI 会锚定相对路径、应用各包自带
-的 `dsh.bundle` patch，并 reconcile profile 的 bundle 层栈）：
+把宿主与 UI 包装进某个 DSH profile（`dsh` CLI 会锚定包路径/包名、应用各包自带的 `dsh.bundle` patch，
+并 reconcile profile 的 bundle 层栈）。宿主与 UI 是**两个包**，都要加到同一个 profile。
+
+**从本地源码检出**——先构建（见[开发](#开发)），再从 harness 检出按路径逐个添加：
 
 ```sh
-cd /home/haruto/Documents/Code/dsh/deepseek-harness
-pnpm dsh plugin --profile web add ../dsh-session-resume/packages/session-resume
-pnpm dsh plugin --profile web add ../dsh-session-resume/packages/ui-session-resume
+pnpm run build
+
+cd <harness-checkout>
+pnpm dsh plugin --profile web add <path-to-dsh-session-resume>/packages/session-resume
+pnpm dsh plugin --profile web add <path-to-dsh-session-resume>/packages/ui-session-resume
 ```
 
-两条命令都会在 `$DSH_HOME/profiles/web` 里 `pnpm add` 并把包并进 `dsh.profile.bundles`。profile 按路径
-链接这些包，所以重新构建插件 `lib/` 后重启即可生效：
+**发布到 npm 后**，用包名即可安装：
 
 ```sh
-systemctl --user restart dsh-web.service   # 见工作区 AGENTS.md
+dsh plugin --profile web add @mill413/dsh-session-resume
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
 ```
+
+两条 `add` 命令都会在 `$DSH_HOME/profiles/web` 里 `pnpm add` 并把包并进 `dsh.profile.bundles`。profile
+按路径链接这些包，所以重新构建插件 `lib/` 后**重启 DSH web 进程**（`dsh web` 或你自己的运行方式）即可
+生效。**不要**往 `$DSH_HOME/profiles/web/cordis.patch.yml` 手动 insert 本插件——包里自带的
+`cordis.patch.yml` 已构成该行，重复 insert 会让加载器报 duplicate loader entry id 无法启动。
 
 ## 开发
 

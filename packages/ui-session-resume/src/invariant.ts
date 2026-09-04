@@ -1,14 +1,14 @@
 /**
  * Package-owned invariant companion for
- * `@deepseek-ai/dsh-client-ui-session-resume`.
- * @module @deepseek-ai/dsh-client-ui-session-resume/invariant
+ * `@mill413/dsh-client-ui-session-resume`.
+ * @module @mill413/dsh-client-ui-session-resume/invariant
  */
 
 /* jscpd:ignore-start */
 import type { Context } from '@deepseek-ai/cordis'
 import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-client-ui-session-resume'
+const PACKAGE_NAME = '@mill413/dsh-client-ui-session-resume'
 
 /** Cordis companion plugin name. */
 export const name = 'client-ui-session-resume-invariant'

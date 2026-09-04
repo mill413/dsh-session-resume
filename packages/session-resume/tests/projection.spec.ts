@@ -1,6 +1,6 @@
 /**
  * Fold tests for the `sessionResume` projection.
- * @module @deepseek-ai/dsh-session-resume/tests/projection
+ * @module @mill413/dsh-session-resume/tests/projection
  */
 
 import { describe, expect, it } from 'vitest'

@@ -5,7 +5,7 @@
  * the model to continue the interrupted turn, and the Web client renders it as
  * a collapsed transcript row (the source carries a short summary).
  *
- * @module @deepseek-ai/dsh-session-resume/resume
+ * @module @mill413/dsh-session-resume/resume
  */
 
 import { createUserMessage } from '@deepseek-ai/dsh-llm'

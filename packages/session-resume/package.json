@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-session-resume",
+  "name": "@mill413/dsh-session-resume",
   "description": "User-triggered continuation of a crash-interrupted session turn, exposed through the sessionResume projection and remote action",
   "version": "0.1.0",
   "publishConfig": {
@@ -56,6 +56,9 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "compatibility": {
+      "dshReleases": ["0.1.2-alpha.5"]
     }
   },
   "peerDependencies": {

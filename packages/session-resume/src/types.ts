@@ -5,7 +5,7 @@
  * projections serve it — `./types` for host consumers, `./client` (the pure
  * re-export) for client aggregates — with zero content duplication.
  *
- * @module @deepseek-ai/dsh-session-resume/types
+ * @module @mill413/dsh-session-resume/types
  */
 
 /**

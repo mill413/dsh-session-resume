@@ -2,4 +2,4 @@
 # strip row. Depends on the session-resume host bundle's service row.
 - insert:
     - id: ui-session-resume
-      name: '@deepseek-ai/dsh-client-ui-session-resume'
+      name: '@mill413/dsh-client-ui-session-resume'

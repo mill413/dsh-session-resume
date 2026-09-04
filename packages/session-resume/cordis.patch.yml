@@ -4,4 +4,4 @@
 # ui-session-resume package's own patch.
 - insert:
     - id: session-resume
-      name: '@deepseek-ai/dsh-session-resume'
+      name: '@mill413/dsh-session-resume'

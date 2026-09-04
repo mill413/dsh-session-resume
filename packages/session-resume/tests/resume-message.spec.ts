@@ -1,6 +1,6 @@
 /**
  * Tests for the continuation-message builder.
- * @module @deepseek-ai/dsh-session-resume/tests/resume-message
+ * @module @mill413/dsh-session-resume/tests/resume-message
  */
 
 import { describe, expect, it } from 'vitest'
