@@ -20,7 +20,7 @@ import sz from '@deepseek-ai/schemastery'
 import { z as zod } from 'zod'
 import type { ZodType } from 'zod'
 import { applySessionResumeProjection, InitialSessionResumeProjection } from './projection.ts'
-import { buildResumeMessage } from './resume.ts'
+import { buildResumeDetail, buildResumeMessage } from './resume.ts'
 import type { SessionResumeProjection, SessionResumeSuccess } from './types.ts'
 
 /** Plugin config schema; empty — the feature is always-on when mounted. */
@@ -35,7 +35,7 @@ const sessionResumeProjectionSchema: ZodType<SessionResumeProjection> = zod.obje
 })
 
 export { applySessionResumeProjection, InitialSessionResumeProjection } from './projection.ts'
-export { buildResumeMessage, resumeProducerName } from './resume.ts'
+export { buildResumeDetail, buildResumeMessage, resumeProducerName } from './resume.ts'
 export type * from './types.ts'
 
 declare module '@deepseek-ai/cordis' {
@@ -71,6 +71,11 @@ export class SessionResumeService extends TypertRemoteService {
    * Ask the live agent for one session to continue the crash-interrupted turn
    * it stopped on. The agent is resolved from the wire session identity, so the
    * client never receives a live-agent handle directly.
+   *
+   * The continuation is delivered ahead of any already queued turn: the denser
+   * detail message is prepended to the `next-turn` head so the interrupted work
+   * is finished before a queued turn runs, while the brief lead is steered to
+   * wake the idle agent (after an interruption the driver is quiescent).
    * @param sessionId - the wire session identity.
    * @returns the resumed turn number.
    * @throws {@link HarnessError} when the agent for the session is not live or
@@ -86,7 +91,11 @@ export class SessionResumeService extends TypertRemoteService {
     if (interruptedTurn === null) {
       throw new HarnessError('session has no interrupted turn to resume', 'NOT_INTERRUPTED')
     }
-    agent.followup(buildResumeMessage())
+    // The continuation must run before any already queued turn. The detail is
+    // prepended to the `next-turn` head; the lead is steered (next-step, which
+    // is claimed before the head `next-turn` message) to wake the idle agent.
+    agent.inbox.prepend('next-turn', buildResumeDetail())
+    agent.steer(buildResumeMessage())
     return { resumedTurn: interruptedTurn }
   }
 }
