@@ -1,7 +1,7 @@
 {
   "name": "@mill413/dsh-session-resume",
   "description": "User-triggered continuation of a crash-interrupted session turn, exposed through the sessionResume projection and remote action",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publishConfig": {
     "access": "public"
   },

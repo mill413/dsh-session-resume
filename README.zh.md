@@ -35,8 +35,8 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/ui-session-res
 首次发布完成后，可从 npm 安装。两个包使用相同版本：
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
 安装后，**重启 DSH Web 进程并刷新页面**。不要手动修改 profile 的 `cordis.patch.yml`；安装命令会应用插件自带的挂载声明。

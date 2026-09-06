@@ -1,7 +1,7 @@
 {
   "name": "@mill413/dsh-client-ui-session-resume",
   "description": "Continue button for a crash-interrupted session turn, docked above the composer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publishConfig": {
     "access": "public"
   },

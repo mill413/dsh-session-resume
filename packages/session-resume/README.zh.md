@@ -7,8 +7,8 @@
 包发布到 npm 后，将两个包装入同一个 profile：
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
 本地安装时，先构建仓库，再将包名替换为 `packages/session-resume` 和 `packages/ui-session-resume` 的绝对路径。安装后重启 DSH Web 并刷新页面，不要手动修改 profile 的 bundle patch。

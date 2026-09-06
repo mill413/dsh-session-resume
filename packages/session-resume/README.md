@@ -7,8 +7,8 @@ Host package for **dsh-session-resume**, a DeepSeek Harness plugin that lets you
 After publication, install matching versions of both packages into the same profile, using that installation’s DSH CLI:
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
 For local installation, build the repository and replace the package names with absolute paths to `packages/session-resume` and `packages/ui-session-resume`. Restart DSH Web and refresh the page after installation. Do not manually edit the profile's bundle patch.

@@ -35,8 +35,8 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/ui-session-res
 After the first release is published, install matching versions of both packages:
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
 After installation, **restart the DSH Web process and refresh the page**. Do not edit the profile's `cordis.patch.yml` manually; the install commands apply the packages' own bundle declarations.
