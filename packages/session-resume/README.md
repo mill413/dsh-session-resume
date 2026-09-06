@@ -4,11 +4,11 @@ Host package for **dsh-session-resume**, a DeepSeek Harness plugin that lets you
 
 ## Install
 
-When the packages are available on npm, install both into the same profile:
+After publication, install matching versions of both packages into the same profile, using that installation’s DSH CLI:
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
 ```
 
 For local installation, build the repository and replace the package names with absolute paths to `packages/session-resume` and `packages/ui-session-resume`. Restart DSH Web and refresh the page after installation. Do not manually edit the profile's bundle patch.
@@ -26,12 +26,12 @@ Manual cancellation, token limits, ordinary errors, blocked turns, and idle goal
 
 ## Development
 
-From the repository root, with a sibling `../deepseek-harness` checkout:
+No Harness source checkout is needed. Use Node.js 24 and pnpm 11.3.0; the SDK development dependencies are pinned npm packages. From the repository root:
 
 ```sh
-pnpm install
-pnpm test
-pnpm run build
+pnpm install --frozen-lockfile
+npm test
+npm run build
 ```
 
 See the repository's root README for the full installation and troubleshooting guide.

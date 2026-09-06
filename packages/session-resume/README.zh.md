@@ -7,8 +7,8 @@
 包发布到 npm 后，将两个包装入同一个 profile：
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
 ```
 
 本地安装时，先构建仓库，再将包名替换为 `packages/session-resume` 和 `packages/ui-session-resume` 的绝对路径。安装后重启 DSH Web 并刷新页面，不要手动修改 profile 的 bundle patch。
@@ -26,13 +26,17 @@ dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
 
 ## 开发
 
-需要同级 `../deepseek-harness` 源码目录。在插件仓库根目录执行：
+不需要 Harness 源码目录。使用 Node.js 24 和 pnpm 11.3.0，SDK 开发依赖从 npm 按固定版本安装。在插件仓库根目录执行：
 
 ```sh
-pnpm install
-pnpm test
-pnpm run build
+pnpm install --frozen-lockfile
+node --test scripts/release.test.mjs
+npm test
+npm run build
+node scripts/pack-release.mjs
 ```
+
+最后一步检查包内容并在 `dist/` 生成两个 tarball，不会发布到 npm。
 
 完整安装与排查说明见仓库根目录 README。
 

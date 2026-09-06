@@ -5,11 +5,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
-    "directory": "packages/client/ui-session-resume"
-  },
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
@@ -26,7 +21,6 @@
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
-    "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
   "dsh": {
@@ -45,7 +39,9 @@
       "patch": "./cordis.patch.yml"
     },
     "compatibility": {
-      "dshReleases": ["0.1.2-alpha.5"]
+      "dshReleases": [
+        "0.1.2-alpha.5"
+      ]
     }
   },
   "scripts": {
@@ -69,18 +65,18 @@
     "react": "*"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:*",
-    "@deepseek-ai/dsh-api-remotes": "workspace:*",
-    "@deepseek-ai/dsh-client-locale": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-conversation": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-primitives": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-renderer": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-session": "workspace:*",
-    "@deepseek-ai/dsh-client-ui-slots": "workspace:*",
-    "@deepseek-ai/dsh-invariants": "workspace:*",
-    "@deepseek-ai/dsh-session": "workspace:*",
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-api-remotes": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-client-locale": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-client-ui-renderer": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-client-ui-session": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-client-ui-slots": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-invariants": "0.1.2-alpha.5",
+    "@deepseek-ai/dsh-session": "0.1.2-alpha.5",
     "@mill413/dsh-session-resume": "workspace:*",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:*",
+    "@deepseek-ai/dsh-typert-protocol": "0.1.2-alpha.5",
     "@testing-library/react": "^16.1.0",
     "@types/react": "~18.3.1",
     "jsdom": "^26.0.0",
@@ -97,5 +93,8 @@
     "lib/client.js",
     "lib/types/**/*.d.ts",
     "cordis.patch.yml"
-  ]
+  ],
+  "engines": {
+    "node": "^22.19 || >=24"
+  }
 }

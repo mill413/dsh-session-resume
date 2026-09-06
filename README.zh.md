@@ -1,6 +1,6 @@
 # dsh-session-resume
 
-**任务被意外打断后，点一下「继续」，让模型接着做。**
+**任务意外中断，点一下「继续」，接着完成。**
 
 这是一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件。当 DSH 进程在任务执行中退出，重新打开会话后，插件会在输入框上方显示「继续」按钮。你决定什么时候恢复，不需要再手动输入续跑提示。
 
@@ -10,7 +10,7 @@
 
 1. DSH 在执行任务时意外退出，例如崩溃、OOM 或中途重启。
 2. 重新启动 DSH 并打开原会话；宿主恢复日志后，输入框上方出现中断提示。
-3. 点击 **继续**。插件优先发送续跑指引，而不是把它排到已有待发送消息后面。
+3. 点击 **继续**。插件将续跑指引放在已有待发送消息之前。
 4. 新一轮开始后，提示自动消失。
 
 界面支持中文和英文，跟随 DSH 的语言设置。插件不自动恢复任务，也没有额外配置项。
@@ -32,11 +32,11 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/ui-session-res
 
 ### 从 npm 安装
 
-如果所需版本已发布到 npm，可改用包名：
+首次发布完成后，可从 npm 安装。两个包使用相同版本：
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
 ```
 
 安装后，**重启 DSH Web 进程并刷新页面**。不要手动修改 profile 的 `cordis.patch.yml`；安装命令会应用插件自带的挂载声明。
@@ -56,15 +56,22 @@ dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
 
 ## 开发
 
-需要 Node.js `^22.19 || >=24`、pnpm，以及同级的 `../deepseek-harness` 源码目录，用于解析 workspace 开发依赖。插件是独立仓库，无需修改或部署 Harness 本体。
+**不需要 Harness 源码目录。** 开发依赖直接从 npm 安装，DSH SDK 固定到 `0.1.2-alpha.5`；仅保留本仓库内构建所需的 Typert 协议源码。安装、开发和 CI 都不需要修改或部署 Harness 本体。
 
-在插件仓库根目录执行：
+建议使用 Node.js 24（与 CI 一致），以及 `packageManager` 指定的 pnpm `11.3.0`。在插件仓库根目录执行：
 
 ```sh
-pnpm install
-pnpm test
-pnpm run build
+npm install --global pnpm@11.3.0  # 已安装对应版本时可跳过
+pnpm install --frozen-lockfile
+node --test scripts/release.test.mjs
+npm test
+npm run build
+node scripts/pack-release.mjs
 ```
+
+最后一步检查包内容并在 `dist/` 生成两个 tarball，不会发布到 npm。
+
+更新依赖时使用 `pnpm install` 并提交新的 `pnpm-lock.yaml`；CI 使用 frozen lockfile，防止构建时悄悄改变依赖版本。
 
 | 目录 | 职责 |
 | --- | --- |
@@ -79,6 +86,12 @@ pnpm run build
 
 点击按钮后，宿主重新核对日志，将安全指引放到 `next-turn` 队首，再通过 `agent.steer()` 发送简短的继续提示以唤醒 agent。两条消息均标记为插件来源的 `notice`，对模型可见并记入会话日志，不伪装成人工输入。
 
+## 自动构建与发布
+
+GitHub Actions 会在 `main` / `master` 分支提交、Pull Request 和手动运行时测试、构建并生成 npm tarball；推送与包版本匹配的 `v*` tag 后才会发布。支持 npm Trusted Publishing（OIDC），也可用 `NPM_TOKEN` 完成首次发布。
+
+首次配置、版本规则和发布步骤见 [发布指南](RELEASING.md)。
+
 ## 许可
 
-[MIT](LICENSE)
+[MIT](LICENSE)。提取自 Harness 的构建支持代码见[第三方声明](THIRD_PARTY_NOTICES.md)。

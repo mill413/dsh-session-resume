@@ -32,11 +32,11 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/ui-session-res
 
 ### From npm
 
-If the version you need has been published to npm, install by name instead:
+After the first release is published, install matching versions of both packages:
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
+dsh plugin --profile web add @mill413/dsh-session-resume@0.1.0
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.0
 ```
 
 After installation, **restart the DSH Web process and refresh the page**. Do not edit the profile's `cordis.patch.yml` manually; the install commands apply the packages' own bundle declarations.
@@ -56,15 +56,22 @@ If clicking returns an error, check whether the session is loaded or a new turn 
 
 ## Development
 
-Requires Node.js `^22.19 || >=24`, pnpm, and a sibling `../deepseek-harness` source checkout for workspace development dependencies. The plugin remains a separate repository; there is no need to modify or deploy Harness itself.
+**No Harness source checkout is required.** Development dependencies come from npm, with the DSH SDK pinned to `0.1.2-alpha.5`. Only the local Typert protocol source needed by the generator remains in this repository. Installation, development, and CI do not modify or deploy Harness itself.
 
-Run from the plugin repository root:
+Use Node.js 24 to match CI, and pnpm `11.3.0` as declared in `packageManager`. Run from the plugin repository root:
 
 ```sh
-pnpm install
-pnpm test
-pnpm run build
+npm install --global pnpm@11.3.0  # skip if this version is already installed
+pnpm install --frozen-lockfile
+node --test scripts/release.test.mjs
+npm test
+npm run build
+node scripts/pack-release.mjs
 ```
+
+The final command validates the package contents and writes two tarballs to `dist/`; it does not publish them.
+
+When changing dependencies, run `pnpm install` and commit the updated `pnpm-lock.yaml`. CI uses the frozen lockfile to prevent implicit dependency changes.
 
 | Directory | Responsibility |
 | --- | --- |
@@ -79,6 +86,12 @@ The `sessionResume` projection records the interrupted turn from a `turn/end` ev
 
 On click, the host rechecks the log, prepends safety guidance to `next-turn`, and sends a short continuation lead through `agent.steer()` to wake the agent. Both messages are plugin-origin `notice` messages, visible to the model and recorded in the session log—not disguised manual input.
 
+## Automated releases
+
+GitHub Actions tests, builds, and packs both packages on pushes to `main` or `master`, pull requests, and manual runs. Only a `v*` tag matching both package versions triggers npm publishing. npm Trusted Publishing (OIDC) is supported, with `NPM_TOKEN` available for the first publication.
+
+See the [release guide](RELEASING.md) (Chinese) for setup, versioning, and publishing steps.
+
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE). Extracted Harness build support is attributed in [third-party notices](THIRD_PARTY_NOTICES.md).

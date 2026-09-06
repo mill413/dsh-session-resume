@@ -1,0 +1,77 @@
+name: Test, build and publish
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.3.0
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Test release scripts
+        run: node --test scripts/release.test.mjs
+      - name: Test plugin
+        run: npm test
+      - name: Build host and Web UI
+        run: npm run build
+      - name: Validate and pack both packages
+        run: node scripts/pack-release.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-packages
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    # PRs, branch pushes and manual runs only build. Publishing requires a v* tag.
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+      - name: Install OIDC-capable npm
+        run: npm install --global npm@11.5.2 --ignore-scripts
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm-packages
+          path: dist
+      - name: Publish host and Web UI
+        run: node scripts/publish-release.mjs
+        env:
+          # Leave unset for npm Trusted Publishing (OIDC).
+          # A granular token can bootstrap packages that do not yet exist.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

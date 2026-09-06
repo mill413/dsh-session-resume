@@ -15,13 +15,13 @@ import type {} from '@deepseek-ai/dsh-session'
 import type {} from '@deepseek-ai/dsh-session-projection'
 import { HarnessError } from '@deepseek-ai/dsh-llm'
 import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol'
-import type { Session, SessionId } from '@deepseek-ai/dsh-session'
+import type { Session } from '@deepseek-ai/dsh-session'
 import sz from '@deepseek-ai/schemastery'
 import { z as zod } from 'zod'
 import type { ZodType } from 'zod'
 import { applySessionResumeProjection, InitialSessionResumeProjection } from './projection.ts'
 import { buildResumeDetail, buildResumeMessage } from './resume.ts'
-import type { SessionResumeProjection, SessionResumeSuccess } from './types.ts'
+import type { SessionResumeProjection, SessionResumeSessionId, SessionResumeSuccess } from './types.ts'
 
 /** Plugin config schema; empty — the feature is always-on when mounted. */
 export interface Config {}
@@ -82,7 +82,7 @@ export class SessionResumeService extends TypertRemoteService {
    *   the session has no pending interrupted turn.
    */
   @Remote('resume')
-  resume(sessionId: SessionId): SessionResumeSuccess {
+  resume(sessionId: SessionResumeSessionId): SessionResumeSuccess {
     const agent = this.ctx.agents.get(sessionId)
     if (agent === undefined) {
       throw new HarnessError('no live agent for the session', 'AGENT_NOT_LIVE')

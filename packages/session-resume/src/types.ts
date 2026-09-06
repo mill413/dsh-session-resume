@@ -36,6 +36,9 @@ declare module '@deepseek-ai/dsh-session-projection/types' {
   }
 }
 
+/** Public wire alias lets Typert name the parameter without inspecting SDK sources. */
+export type SessionResumeSessionId = import('@deepseek-ai/dsh-session/types').SessionId
+
 /** Stable failure codes for one continue-triggering resume call. */
 export type SessionResumeErrorCode = 'NOT_INTERRUPTED' | 'AGENT_NOT_LIVE'
 
