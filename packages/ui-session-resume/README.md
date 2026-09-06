@@ -1,34 +1,39 @@
 # @mill413/dsh-client-ui-session-resume
 
-Web client half of the `dsh-session-resume` plugin. It renders a **Continue** strip in
-the `conversation.input.dock` slot (the same composer-stack family as the goal bar,
-todo, and queue docks), driven entirely by the host's `sessionResume` projection.
+Web UI for **dsh-session-resume**. Adds a **Continue** button above the DSH message input when the host identifies an interrupted turn awaiting continuation.
+
+## Install
+
+Requires DSH `0.1.2-alpha.5` and the companion host package. When published to npm, install both into the same profile:
+
+```sh
+dsh plugin --profile web add @mill413/dsh-session-resume
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
+```
+
+For a local build, use absolute paths to the two package directories instead. Restart DSH Web and refresh the page after installation.
 
 ## Behavior
 
-- Reads `useProjection('sessionResume')`. When `interruptedTurn != null`, it shows a
-  Continue button; otherwise it renders nothing.
-- Clicking Continue calls the host `@Remote('resume')` with the wire `sessionId`, which
-  queues a plugin-origin `notice` asking the model to continue the interrupted turn.
-- It owns no store and no projection logic — it is a pure view over the projection the
-  host already publishes through `session/projection` frames.
+- Renders in the native `conversation.input.dock` slot, driven by the host's `sessionResume` projection.
+- Shows nothing unless an interrupted turn is pending.
+- Calls the host's resume action on click; disables the button while the request is pending and displays request errors inline.
+- Disappears when a new turn starts. Never resumes automatically.
+- Follows the DSH interface language, with Chinese and English copy.
 
-## UI copy
-
-The strip label and button text live in a typed locale dictionary
-(`src/client/locales.ts`, `zh` and `en` sets) and follow the UI language. They are not
-hardcoded in the component and are not deployment-configurable; the model-facing
-continuation text is pinned in the host package's `src/resume.ts`.
+The host sends continuation and tool-safety guidance ahead of queued turns. This UI does not detect interruptions independently or retry tools.
 
 ## Development
 
-Built via `tsdown` using the `clientBundle` preset (see `build/` at the repo root). The
-composer-dock component test lives in `tests/resume-dock.client.spec.tsx`.
+From the repository root:
 
 ```sh
-pnpm run build   # from the repo root: tsc + tsdown for the client package
-pnpm test        # from the repo root: runs the Web dock component tests
+pnpm test
+pnpm run build
 ```
 
-Published through `dsh.client.inject` (platform `web`); the package's `cordis.patch.yml`
-joins the profile's bundle layer stack when installed with `dsh plugin add`.
+UI copy lives in `src/client/locales.ts`; the component is covered by `tests/resume-dock.client.spec.tsx`. See the root README for source prerequisites and troubleshooting.
+
+## License
+
+MIT

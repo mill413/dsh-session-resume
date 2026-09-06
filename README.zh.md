@@ -1,119 +1,84 @@
 # dsh-session-resume
 
-一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件：当会话在 turn
-进行中被**中断**时显示一个 **继续** 按钮。当 Harness 进程死亡（重启、OOM 被 kill、或崩溃），
-恢复后的会话停在一个被打断的 turn 上；点击按钮让模型接着该 turn 收尾——
-无需手动敲"继续"消息。续跑**严格由用户触发**：绝不自动续跑。
+**任务被意外打断后，点一下「继续」，让模型接着做。**
+
+这是一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件。当 DSH 进程在任务执行中退出，重新打开会话后，插件会在输入框上方显示「继续」按钮。你决定什么时候恢复，不需要再手动输入续跑提示。
 
 [English](README.md)
 
-## 它能做什么
+## 使用体验
 
-- **检测被撕裂的 turn。** 没有持久化的"是否被中断"标志——`sessionResume` 投影从修复后的会话日志
-  推导状态，因此只对真正崩溃中断的 turn 生效。
-- **显示继续按钮。** 位于 `conversation.input.dock` composer 槽的停靠条（与 goal、todo、queue
-  停靠条同族），仅在 `interruptedTurn != null` 时渲染。
-- **点击续跑。** 调宿主 `@Remote('resume')`（带 wire `sessionId`），排入一条 **plugin 来源的
-  `notice`** 消息指示模型继续。续跑一开始，投影即清除，按钮消失。
+1. DSH 在执行任务时意外退出，例如崩溃、OOM 或中途重启。
+2. 重新启动 DSH 并打开原会话；宿主恢复日志后，输入框上方出现中断提示。
+3. 点击 **继续**。插件优先发送续跑指引，而不是把它排到已有待发送消息后面。
+4. 新一轮开始后，提示自动消失。
 
-绝不自动续跑，也绝不把续跑伪装成用户的输入。
-
-## 工作原理
-
-1. **检测** — `sessionResume` 投影折叠每一条已提交的 `turn/end`：`turn/end` 的
-   `reason.kind === 'interrupted'` 把会话标记为"待续跑"（记录 turn 号）；下一条 `turn/start`
-   清除该标记。投影通过标准的 `session/projection` 帧推送给客户端，插件自身不建 store。
-2. **按钮** — Web 停靠条读取 `useProjection('sessionResume')`，当 `interruptedTurn != null`
-   时才渲染继续按钮。
-3. **继续** — 宿主解析 live agent、重新折叠会话日志，若存在待续跑的中断 turn，则
-   `agent.followup(buildResumeMessage())`。"仅当工具为只读或幂等才重试"的指引遵循崩溃修复
-   `TOOL_OUTCOME_UNKNOWN` 的语义，而不会盲目重跑可能有副作用的工具。
-
-### 检测范围
-
-只有 `turn/end { reason: 'interrupted' }` 被当作可续跑。该标记**只有崩溃修复路径**会产生，因此覆盖
-一切"进程中途死亡"的情形（重启、OOM、被 kill、崩溃）。它**刻意不**覆盖 `max-tokens`（模型输出上限）、
-`aborted`（主动取消）、`error`、`blocked`——那些要么不是"被截断且想继续"，要么是用户主动发起的。
-扩大到 `max-tokens` / `aborted` 可作为后续项。
+界面支持中文和英文，跟随 DSH 的语言设置。插件不自动恢复任务，也没有额外配置项。
 
 ## 安装
 
-用 `dsh-plugin` CLI 把插件装进某个 DSH profile；它会锚定包路径（或包名）、应用各包自带的
-`dsh.bundle` patch，并 reconcile profile 的 bundle 层栈。宿主与 UI 是**两个包**，都要加到同一
-个 profile。
+当前声明兼容 **DSH `0.1.2-alpha.5`**。其他版本需要另行验证。
 
-**从本地源码检出**——先构建（见[从源码构建 / 测试](#从源码构建--测试)），再从 harness 检出按路径
-逐个添加：
+插件分为宿主包和 Web 界面包，**两个都要安装到同一个 profile**。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
+
+### 从本地源码安装
+
+先按下方「开发」章节构建，再执行（替换为实际绝对路径）：
 
 ```sh
-pnpm install
-pnpm run build
-
-cd <harness-checkout>
-pnpm dsh plugin --profile web add <path-to-dsh-session-resume>/packages/session-resume
-pnpm dsh plugin --profile web add <path-to-dsh-session-resume>/packages/ui-session-resume
+dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
+dsh plugin --profile web add /path/to/dsh-session-resume/packages/ui-session-resume
 ```
 
-**发布到 npm 后**，用包名即可安装：
+### 从 npm 安装
+
+如果所需版本已发布到 npm，可改用包名：
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume
 dsh plugin --profile web add @mill413/dsh-client-ui-session-resume
 ```
 
-无论哪种方式，改变 profile 的 bundle 列表后都需要**重启 DSH web 进程**（你如何运行它都行——`dsh web`、
-服务管理器、或你自己的部署方式），新 bundle 才会加载。两条 `add` 命令都会在 `$DSH_HOME/profiles/web`
-里 `pnpm add` 并把包并进 `dsh.profile.bundles`；按路径安装时 profile 以 path 链接该包，所以重新构建
-插件 `lib/` 后重启即可生效。**不要**往 `$DSH_HOME/profiles/web/cordis.patch.yml` 手动 insert 本插件——
-包里自带的 `cordis.patch.yml` 已构成该行，重复 insert 会让加载器报 duplicate loader entry id 无法启动。
+安装后，**重启 DSH Web 进程并刷新页面**。不要手动修改 profile 的 `cordis.patch.yml`；安装命令会应用插件自带的挂载声明。
 
-## 兼容性
+## 边界与安全
 
-针对 **`@deepseek-ai/dsh` `0.1.2-alpha.5`**（本插件验证所用的 harness 版本线）构建与测试。宿主与 UI 包
-把 `@deepseek-ai/*` 依赖声明为 `"*"` 的 peer，运行时由宿主 DSH web profile 的 node_modules 解析（遵循
-插件开发约定）。后续 harness 版本可能改动 session-projection 或 conversation-input-dock 接缝；升级 `dsh`
-后请看本节。
+- **只识别宿主标记为 `interrupted` 的轮次。** 主动停止、输出达到 token 上限、普通错误和 `blocked` 状态不会触发按钮。
+- **不是检查点恢复。** 它基于已有会话上下文请求模型继续，不会恢复进程内存，也不能保证从中断的精确位置重放。
+- **不会自动重试工具。** 续跑指引要求模型：仅对只读或幂等操作直接重试；其他操作先检查外部状态，并避免重复已完成步骤。这是给模型的指引，不是事务回滚或防重复执行保证。
+- **不替代 goal 的恢复流程。** 仅有后台任务排队、但没有中断轮次的会话不在检测范围内。
 
-## 使用
+### 为什么没有「继续」按钮？
 
-崩溃后下次冷加载，会话会在 composer 上方显示继续停靠条。文案随界面语言切换（`zh` / `en`）；模型侧
-续跑提示钉在 `packages/session-resume/src/resume.ts`。停靠条与按钮在正常会话、用户主动取消的 turn、
-`max-tokens` 截断、或没有中断 turn 的会话上**都不会**出现。
+先确认两个包已装入当前 profile，并且已重启 Web、刷新页面。按钮只会在宿主恢复日志后确认存在待续跑的中断轮次时显示；正常完成或主动取消的会话没有按钮是预期行为。
 
-## 配置
+如果点击后出现错误，请检查会话是否已加载，以及是否已在其他页面开始了新一轮。插件会在发送前重新核对会话状态。
 
-宿主服务声明了空 `Config`（`Config: z.object({})`），因此插件挂载即生效、不可从 `cordis.yml` 调参；
-也**没有**自动续跑模式与部署级文案覆盖。
+## 开发
 
-## 从源码构建 / 测试
+需要 Node.js `^22.19 || >=24`、pnpm，以及同级的 `../deepseek-harness` 源码目录，用于解析 workspace 开发依赖。插件是独立仓库，无需修改或部署 Harness 本体。
+
+在插件仓库根目录执行：
 
 ```sh
-pnpm install            # 需要同级 ../deepseek-harness 检出（workspace 镜像）
-pnpm run build          # host: tsc + tsdown + typert；client: tsc + tsdown clientBundle
-pnpm test               # host 折叠/续跑消息 + Web dock 组件测试
-
-npm pack --dry-run -C packages/session-resume
-npm pack --dry-run -C packages/ui-session-resume
+pnpm install
+pnpm test
+pnpm run build
 ```
 
-宿主投影折叠与续跑消息构造是纯函数，已在 `packages/session-resume/tests/` 单测覆盖；composer 停靠条
-组件在 `packages/ui-session-resume/tests/resume-dock.client.spec.tsx` 覆盖。
+| 目录 | 职责 |
+| --- | --- |
+| `packages/session-resume` | 中断状态投影、恢复动作、模型侧提示 |
+| `packages/ui-session-resume` | 输入框上方的继续按钮与中英文文案 |
+| `packages/typert-protocol` | 构建所需的 Typert 协议源码 |
+| `build` | 客户端打包配置 |
 
-> **注（独立 workspace）：** `@deepseek-ai/dsh-typert-protocol` 没有链到仓库根 `node_modules`
-> （它只是宿主/客户端包的 `workspace:*` 依赖）。从仓库根跑 `vitest` 时，只有该包自身的 `node_modules`
-> 在解析路径上才能解析到它。投影单测（`projection.spec.ts`）不引入 llm/typert 链路，可直接通过；
-> 另外两个经 `@deepseek-ai/dsh-llm` 间接引入它的（`resume-message.spec.ts`、`resume-dock.client.spec.tsx`）
-> 需要该链接存在才能解析。
+### 实现概要
 
-## 已知限制
+`sessionResume` 投影从会话日志中读取 `turn/end` 的 `reason.kind === 'interrupted'`，记录待续跑轮次，并在下一次 `turn/start` 时清除。
 
-- 续跑**严格由用户触发**，刻意不提供自动续跑模式；可配置的自动模式可作为后续项。
-- 检测仅覆盖"崩溃撕裂的 turn"（`reason: 'interrupted'`）。它不提供对 `max-tokens`/`aborted` turn 的续跑，
-  也不覆盖"agent 空闲但已有排队的后台工作"（例如已 armed 的 goal 轮次）；该场景由 goal 子系统自身的
-  resume 流程负责。
+点击按钮后，宿主重新核对日志，将安全指引放到 `next-turn` 队首，再通过 `agent.steer()` 发送简短的继续提示以唤醒 agent。两条消息均标记为插件来源的 `notice`，对模型可见并记入会话日志，不伪装成人工输入。
 
-## License
+## 许可
 
-MIT。完整设计、安装与模型体验说明见宿主包
-[README.md](packages/session-resume/README.md)（英文）与
-[`README.zh.md`](packages/session-resume/README.zh.md)（中文）。
+[MIT](LICENSE)
