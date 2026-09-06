@@ -71,7 +71,3 @@ jobs:
           path: dist
       - name: Publish host and Web UI
         run: node scripts/publish-release.mjs
-        env:
-          # Leave unset for npm Trusted Publishing (OIDC).
-          # A granular token can bootstrap packages that do not yet exist.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
