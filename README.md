@@ -86,12 +86,6 @@ The `sessionResume` projection records the interrupted turn from a `turn/end` ev
 
 On click, the host rechecks the log, prepends safety guidance to `next-turn`, and sends a short continuation lead through `agent.steer()` to wake the agent. Both messages are plugin-origin `notice` messages, visible to the model and recorded in the session log—not disguised manual input.
 
-## Automated releases
-
-GitHub Actions tests, builds, and packs both packages on pushes to `main` or `master`, pull requests, and manual runs. Only a `v*` tag matching both package versions triggers npm publishing. npm Trusted Publishing (OIDC) is supported, with `NPM_TOKEN` available for the first publication.
-
-See the [release guide](RELEASING.md) (Chinese) for setup, versioning, and publishing steps.
-
 ## License
 
 [MIT](LICENSE). Extracted Harness build support is attributed in [third-party notices](THIRD_PARTY_NOTICES.md).

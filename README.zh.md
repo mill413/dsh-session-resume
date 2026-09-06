@@ -86,12 +86,6 @@ node scripts/pack-release.mjs
 
 点击按钮后，宿主重新核对日志，将安全指引放到 `next-turn` 队首，再通过 `agent.steer()` 发送简短的继续提示以唤醒 agent。两条消息均标记为插件来源的 `notice`，对模型可见并记入会话日志，不伪装成人工输入。
 
-## 自动构建与发布
-
-GitHub Actions 会在 `main` / `master` 分支提交、Pull Request 和手动运行时测试、构建并生成 npm tarball；推送与包版本匹配的 `v*` tag 后才会发布。支持 npm Trusted Publishing（OIDC），也可用 `NPM_TOKEN` 完成首次发布。
-
-首次配置、版本规则和发布步骤见 [发布指南](RELEASING.md)。
-
 ## 许可
 
 [MIT](LICENSE)。提取自 Harness 的构建支持代码见[第三方声明](THIRD_PARTY_NOTICES.md)。
