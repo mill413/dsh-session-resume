@@ -4,7 +4,7 @@ Web UI for **dsh-session-resume**. Adds a **Continue** button above the DSH mess
 
 ## Install
 
-Requires DSH `0.1.2-alpha.5` and the companion host package. When published to npm, install both into the same profile:
+Requires DSH `0.1.3-alpha.2` and the companion host package. When published to npm, install both into the same profile:
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1

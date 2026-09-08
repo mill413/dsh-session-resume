@@ -12,14 +12,14 @@ publicHoistPattern:
 # Keep wire schemas on one Zod ABI across the plugin and published SDK.
 overrides:
   zod: 4.4.3
-  # Caret prerelease ranges otherwise select newer RC helpers than the host SDK.
-  '@deepseek-ai/dsh-brand': 0.1.2-alpha.5
-  '@deepseek-ai/dsh-deque': 0.1.2-alpha.5
-  '@deepseek-ai/dsh-scope': 0.1.2-alpha.5
-  '@deepseek-ai/dsh-system-prompt': 0.1.2-alpha.5
-  '@deepseek-ai/dsh-timeout': 0.1.2-alpha.5
-  '@deepseek-ai/dsh-util-crypto': 0.1.2-alpha.5
-  '@deepseek-ai/dsh-util-values': 0.1.2-alpha.5
+  # Caret prerelease ranges otherwise select newer SDK helpers than the host SDK.
+  '@deepseek-ai/dsh-brand': 0.1.3-alpha.2
+  '@deepseek-ai/dsh-deque': 0.1.3-alpha.2
+  '@deepseek-ai/dsh-scope': 0.1.3-alpha.2
+  '@deepseek-ai/dsh-system-prompt': 0.1.3-alpha.2
+  '@deepseek-ai/dsh-timeout': 0.1.3-alpha.2
+  '@deepseek-ai/dsh-util-crypto': 0.1.3-alpha.2
+  '@deepseek-ai/dsh-util-values': 0.1.3-alpha.2
 
 peerDependencyRules:
   allowedVersions:
@@ -30,3 +30,28 @@ allowBuilds:
   # SDK native runtime providers are not needed to build this plugin.
   koffi: false
   node-pty: false
+
+# The pinned SDK prerelease is younger than pnpm's install-age gate; these are
+# the exact versions this repository was verified against.
+minimumReleaseAgeExclude:
+  - '@deepseek-ai/dsh-agent@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-api-remotes@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-brand@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-client-locale@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-client-ui-conversation@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-client-ui-primitives@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-client-ui-renderer@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-client-ui-session@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-client-ui-slots@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-deque@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-invariants@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-llm@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-scope@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-session-projection@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-session@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-system-prompt@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-timeout@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-typert-generator@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-typert-protocol@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-util-crypto@0.1.3-alpha.2'
+  - '@deepseek-ai/dsh-util-values@0.1.3-alpha.2'

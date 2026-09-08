@@ -17,7 +17,7 @@
 
 ## 安装
 
-当前声明兼容 **DSH `0.1.2-alpha.5`**。其他版本需要另行验证。
+当前声明兼容 **DSH `0.1.3-alpha.2`**。其他版本需要另行验证。
 
 插件分为宿主包和 Web 界面包，**两个都要安装到同一个 profile**。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
 
@@ -56,7 +56,7 @@ dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 
 ## 开发
 
-**不需要 Harness 源码目录。** 开发依赖直接从 npm 安装，DSH SDK 固定到 `0.1.2-alpha.5`；仅保留本仓库内构建所需的 Typert 协议源码。安装、开发和 CI 都不需要修改或部署 Harness 本体。
+**不需要 Harness 源码目录。** 开发依赖直接从 npm 安装，DSH SDK 固定到 `0.1.3-alpha.2`；仅保留本仓库内构建所需的 Typert 协议源码。安装、开发和 CI 都不需要修改或部署 Harness 本体。
 
 建议使用 Node.js 24（与 CI 一致），以及 `packageManager` 指定的 pnpm `11.3.0`。在插件仓库根目录执行：
 

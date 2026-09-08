@@ -17,7 +17,7 @@ The interface follows DSH's Chinese or English language setting. Nothing resumes
 
 ## Install
 
-Declared compatibility: **DSH `0.1.2-alpha.5`**. Other versions need separate verification.
+Declared compatibility: **DSH `0.1.3-alpha.2`**. Other versions need separate verification.
 
 The plugin has a host package and a Web UI package. **Install both into the same profile**, using the DSH CLI for that installation. These examples use `web`.
 
@@ -56,7 +56,7 @@ If clicking returns an error, check whether the session is loaded or a new turn 
 
 ## Development
 
-**No Harness source checkout is required.** Development dependencies come from npm, with the DSH SDK pinned to `0.1.2-alpha.5`. Only the local Typert protocol source needed by the generator remains in this repository. Installation, development, and CI do not modify or deploy Harness itself.
+**No Harness source checkout is required.** Development dependencies come from npm, with the DSH SDK pinned to `0.1.3-alpha.2`. Only the local Typert protocol source needed by the generator remains in this repository. Installation, development, and CI do not modify or deploy Harness itself.
 
 Use Node.js 24 to match CI, and pnpm `11.3.0` as declared in `packageManager`. Run from the plugin repository root:
 

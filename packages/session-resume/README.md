@@ -1,6 +1,6 @@
 # @mill413/dsh-session-resume
 
-Host package for **dsh-session-resume**, a DeepSeek Harness plugin that lets you continue a crash-interrupted task with one click. Requires DSH `0.1.2-alpha.5` and the companion Web UI package.
+Host package for **dsh-session-resume**, a DeepSeek Harness plugin that lets you continue a crash-interrupted task with one click. Requires DSH `0.1.3-alpha.2` and the companion Web UI package.
 
 ## Install
 

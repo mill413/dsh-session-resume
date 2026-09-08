@@ -1,6 +1,6 @@
 # @mill413/dsh-session-resume
 
-**dsh-session-resume** 的宿主包：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。需要 DSH `0.1.2-alpha.5` 和配套 Web 界面包。
+**dsh-session-resume** 的宿主包：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。需要 DSH `0.1.3-alpha.2` 和配套 Web 界面包。
 
 ## 安装
 
