@@ -19,24 +19,22 @@ The interface follows DSH's Chinese or English language setting. Nothing resumes
 
 Declared compatibility: **DSH `0.1.3-alpha.2`**. Other versions need separate verification.
 
-The plugin has a host package and a Web UI package. **Install both into the same profile**, using the DSH CLI for that installation. These examples use `web`.
+The plugin ships as one package carrying both the host half and the Web UI half. **Install it into the profile**, using the DSH CLI for that installation. These examples use `web`.
 
 ### From a local checkout
 
-Build the plugin as described under Development, then install using actual absolute paths:
+Build the plugin as described under Development, then install using an actual absolute path:
 
 ```sh
 dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
-dsh plugin --profile web add /path/to/dsh-session-resume/packages/ui-session-resume
 ```
 
 ### From npm
 
-After the first release is published, install matching versions of both packages:
+After the first release is published, install the package:
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
 After installation, **restart the DSH Web process and refresh the page**. Do not edit the profile's `cordis.patch.yml` manually; the install commands apply the packages' own bundle declarations.
@@ -50,7 +48,7 @@ After installation, **restart the DSH Web process and refresh the page**. Do not
 
 ### No Continue button?
 
-Check that both packages are installed in the active profile, then restart Web and refresh the page. The button appears only after the host loads the session and identifies an interrupted turn awaiting continuation. No button on a completed or manually cancelled session is expected.
+Check that the package is installed in the active profile, then restart Web and refresh the page. The button appears only after the host loads the session and identifies an interrupted turn awaiting continuation. No button on a completed or manually cancelled session is expected.
 
 If clicking returns an error, check whether the session is loaded or a new turn has already started elsewhere. The host rechecks the session before sending the continuation.
 
@@ -69,14 +67,13 @@ npm run build
 node scripts/pack-release.mjs
 ```
 
-The final command validates the package contents and writes two tarballs to `dist/`; it does not publish them.
+The final command validates the package contents and writes one tarball to `dist/`; it does not publish it.
 
 When changing dependencies, run `pnpm install` and commit the updated `pnpm-lock.yaml`. CI uses the frozen lockfile to prevent implicit dependency changes.
 
 | Directory | Responsibility |
 | --- | --- |
-| `packages/session-resume` | Interruption projection, resume action, model-facing guidance |
-| `packages/ui-session-resume` | Continue button and Chinese/English UI copy |
+| `packages/session-resume` | Interruption projection, resume action, model-facing guidance, and the Continue button with Chinese/English UI copy |
 | `packages/typert-protocol` | Typert protocol source required by the build |
 | `build` | Client bundling configuration |
 

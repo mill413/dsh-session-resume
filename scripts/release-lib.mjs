@@ -2,7 +2,6 @@ import { readFileSync } from 'node:fs'
 
 export const packageDirectories = [
   'packages/session-resume',
-  'packages/ui-session-resume',
 ]
 
 export function readJson(path) {

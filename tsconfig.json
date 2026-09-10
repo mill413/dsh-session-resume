@@ -6,6 +6,6 @@
   "references": [
     { "path": "./packages/typert-protocol" },
     { "path": "./packages/session-resume" },
-    { "path": "./packages/ui-session-resume" }
+    { "path": "./packages/session-resume/tsconfig.client.json" }
   ]
 }

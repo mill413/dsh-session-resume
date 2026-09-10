@@ -1,14 +1,14 @@
-import { defineConfig } from 'tsdown'
 import { typertPlugin } from '@deepseek-ai/dsh-typert-generator/tsdown'
+import { clientBundle } from '../../build/client-bundle.ts'
 
-export default defineConfig({
-  entry: ['lib/types/{index,invariant}.js'],
-  outDir: 'lib',
-  format: ['esm'],
-  platform: 'node',
-  target: 'es2024',
-  fixedExtension: false,
-  dts: false,
-  clean: false,
-  plugins: [typertPlugin({ mode: 'workspace', faces: ['host'] })],
-})
+// The host phase emits lib/index.js plus the generated Typert faces; the client
+// phase consumes the emitted lib/typert.remote-client.js as a package subpath,
+// so it must run after the host phase.
+export default clientBundle(
+  '@mill413/dsh-session-resume',
+  ['lib/types/index.js', 'lib/types/invariant.js'],
+  {
+    hostPhase: true,
+    lib: { plugins: [typertPlugin({ mode: 'workspace', faces: ['host'] })] },
+  },
+)

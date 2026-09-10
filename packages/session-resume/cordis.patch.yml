@@ -1,7 +1,7 @@
-# The session-resume bundle patch: installs the host sessionResume service
-# row (projection provider + remote action). Applied after the profile's base
-# bundles; the Web surface row for the continue button ships in the
-# ui-session-resume package's own patch.
+# The session-resume bundle patch: installs the host sessionResume service row
+# (projection provider + remote action) together with the composer dock's
+# continue strip. The browser half is discovered from the same entry's
+# dsh.client declaration.
 - insert:
     - id: session-resume
       name: '@mill413/dsh-session-resume'

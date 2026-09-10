@@ -36,7 +36,7 @@ jobs:
         run: npm test
       - name: Build host and Web UI
         run: npm run build
-      - name: Validate and pack both packages
+      - name: Validate and pack the package
         run: node scripts/pack-release.mjs
       - uses: actions/upload-artifact@v4
         with:
@@ -69,5 +69,5 @@ jobs:
         with:
           name: npm-packages
           path: dist
-      - name: Publish host and Web UI
+      - name: Publish the package
         run: node scripts/publish-release.mjs

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib/types",
+    "tsBuildInfoFile": "lib/tsconfig.client.tsbuildinfo",
     "jsx": "react-jsx",
     "lib": [
       "ESNext",
@@ -13,6 +14,8 @@
     "paths": {}
   },
   "include": [
-    "src"
+    "src/client",
+    "src/css-modules.d.ts",
+    "src/types.ts"
   ]
 }

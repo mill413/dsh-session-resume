@@ -56,15 +56,19 @@ function fixture(t) {
   t.after(() => rmSync(root, { recursive: true, force: true }))
   mkdirSync(resolve(root, 'dist'))
   mkdirSync(resolve(root, 'bin'))
-  const packages = ['session-resume', 'ui-session-resume'].map((directory, index) => {
-    const name = index === 0 ? '@example/resume' : '@example/ui-resume'
-    mkdirSync(resolve(root, 'packages', directory), { recursive: true })
-    writeFileSync(resolve(root, 'packages', directory, 'package.json'), JSON.stringify({ name, version: '1.0.0' }))
-    const filename = `${directory}-1.0.0.tgz`
-    const bytes = Buffer.from(`fixture ${name}`)
-    writeFileSync(resolve(root, 'dist', filename), bytes)
-    return { name, version: '1.0.0', filename, integrity: `sha512-${createHash('sha512').update(bytes).digest('base64')}` }
-  })
+  const name = '@example/resume'
+  const directory = 'session-resume'
+  mkdirSync(resolve(root, 'packages', directory), { recursive: true })
+  writeFileSync(resolve(root, 'packages', directory, 'package.json'), JSON.stringify({ name, version: '1.0.0' }))
+  const filename = `${directory}-1.0.0.tgz`
+  const bytes = Buffer.from(`fixture ${name}`)
+  writeFileSync(resolve(root, 'dist', filename), bytes)
+  const packages = [{
+    name,
+    version: '1.0.0',
+    filename,
+    integrity: `sha512-${createHash('sha512').update(bytes).digest('base64')}`,
+  }]
   writeFileSync(resolve(root, 'dist/release.json'), JSON.stringify({ version: '1.0.0', distTag: 'latest', packages }))
   writeFileSync(resolve(root, 'bin/npm'), `#!/usr/bin/env node
 import fs from 'node:fs';
@@ -72,8 +76,8 @@ const args = process.argv.slice(2);
 fs.appendFileSync('calls.jsonl', JSON.stringify(args) + '\\n');
 if (args[0] === 'view') {
   if (process.env.MOCK_NPM_ERROR) { console.log(JSON.stringify({error:{code:process.env.MOCK_NPM_ERROR}})); process.exit(1); }
-  if (args[1].startsWith('@example/resume@')) { console.log(JSON.stringify(process.env.MOCK_NPM_ARRAY ? ['1.0.0'] : '1.0.0')); process.exit(0); }
-  console.log(JSON.stringify({error:{code:'E404'}})); process.exit(1);
+  if (process.env.MOCK_NPM_MISSING) { console.log(JSON.stringify({error:{code:'E404'}})); process.exit(1); }
+  console.log(JSON.stringify(process.env.MOCK_NPM_ARRAY ? ['1.0.0'] : '1.0.0')); process.exit(0);
 }
 `, { mode: 0o755 })
   // An extensionless executable inherits this explicit ESM package boundary.
@@ -83,16 +87,25 @@ if (args[0] === 'view') {
     GITHUB_EVENT_NAME: 'push', GITHUB_REF_TYPE: 'tag', GITHUB_REF_NAME: 'v1.0.0',
   }
   delete env.MOCK_NPM_ERROR
+  delete env.MOCK_NPM_MISSING
+  delete env.MOCK_NPM_ARRAY
   return { root, env }
 }
 
-test('publish rerun skips existing host and publishes missing UI from the tarball', t => {
+test('publish skips a version already on the registry', t => {
   const { root, env } = fixture(t)
   execFileSync(process.execPath, [publishScript], { cwd: root, env })
   const calls = readFileSync(resolve(root, 'calls.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
+  assert.equal(calls.filter(args => args[0] === 'publish').length, 0)
+})
+
+test('publish uploads a missing package from its tarball', t => {
+  const { root, env } = fixture(t)
+  execFileSync(process.execPath, [publishScript], { cwd: root, env: { ...env, MOCK_NPM_MISSING: '1' } })
+  const calls = readFileSync(resolve(root, 'calls.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
   const publishes = calls.filter(args => args[0] === 'publish')
   assert.equal(publishes.length, 1)
-  assert.equal(publishes[0][1], resolve(root, 'dist/ui-session-resume-1.0.0.tgz'))
+  assert.equal(publishes[0][1], resolve(root, 'dist/session-resume-1.0.0.tgz'))
   assert.ok(publishes[0].includes('--provenance'))
 })
 
@@ -100,7 +113,7 @@ test('publish retry accepts npm 12 array-shaped version responses', t => {
   const { root, env } = fixture(t)
   execFileSync(process.execPath, [publishScript], { cwd: root, env: { ...env, MOCK_NPM_ARRAY: '1' } })
   const calls = readFileSync(resolve(root, 'calls.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
-  assert.equal(calls.filter(args => args[0] === 'publish').length, 1)
+  assert.equal(calls.filter(args => args[0] === 'publish').length, 0)
 })
 
 test('registry authentication failures do not become publish attempts', t => {
@@ -115,7 +128,7 @@ test('registry authentication failures do not become publish attempts', t => {
 
 test('reject corrupted artifacts before contacting npm', t => {
   const { root, env } = fixture(t)
-  writeFileSync(resolve(root, 'dist/ui-session-resume-1.0.0.tgz'), 'corrupted')
+  writeFileSync(resolve(root, 'dist/session-resume-1.0.0.tgz'), 'corrupted')
   const result = spawnSync(process.execPath, [publishScript], { cwd: root, env, encoding: 'utf8' })
   assert.notEqual(result.status, 0)
   assert.match(result.stderr, /Integrity mismatch/)

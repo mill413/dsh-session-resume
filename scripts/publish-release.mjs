@@ -14,7 +14,7 @@ if (release.version !== version || release.distTag !== distTag || release.packag
   throw new Error('Artifact release metadata does not match this tag')
 }
 
-// Validate BOTH artifacts before publishing either package.
+// Validate every artifact before publishing any package.
 for (const [index, pkg] of release.packages.entries()) {
   if (pkg.name !== manifests[index].name || pkg.version !== version
     || !/^[A-Za-z0-9_.-]+\.tgz$/.test(pkg.filename)) {
@@ -27,8 +27,8 @@ for (const [index, pkg] of release.packages.entries()) {
 
 const registry = 'https://registry.npmjs.org'
 for (const pkg of release.packages) {
-  // npm cannot publish two packages atomically. A rerun skips an already
-  // published version so it can finish a release interrupted between packages.
+  // A rerun skips an already published version so it can finish a release
+  // interrupted after the registry accepted the upload.
   const check = spawnSync('npm', ['view', `${pkg.name}@${version}`, 'version', '--json', '--registry', registry], {
     encoding: 'utf8',
   })

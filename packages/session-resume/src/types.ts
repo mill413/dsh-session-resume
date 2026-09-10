@@ -1,9 +1,8 @@
 /**
  * Pure types of the session-resume domain: the ONE home of the
  * `sessionResume` projection-key declaration plus the remote-result vocabulary
- * it carries, free of this package's host-side imports. Two namespace
- * projections serve it — `./types` for host consumers, `./client` (the pure
- * re-export) for client aggregates — with zero content duplication.
+ * it carries, free of host-side imports. The package's browser half ships
+ * through `./client`, so this is the single shared type outlet both halves read.
  *
  * @module @mill413/dsh-session-resume/types
  */

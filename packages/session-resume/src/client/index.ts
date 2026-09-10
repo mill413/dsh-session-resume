@@ -21,7 +21,10 @@ import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 // Type-only: pulls the Session standard useProjection seat.
 import type {} from '@deepseek-ai/dsh-client-ui-session/client'
 // Type-only: the `sessionResume` SessionProjectionMap key merge (single source, the domain's pure outlet).
-import type {} from '@mill413/dsh-session-resume/client'
+import type {} from '../types.ts'
+// Type-only: loads the client projection table the declaration above augments,
+// so the merge resolves inside this browser program.
+import type {} from '@deepseek-ai/dsh-session-projection/types'
 // Runtime: the generated remote namespace, mounted onto ctx.remote.
 import TYPERT_REMOTE from '@mill413/dsh-session-resume/remote'
 import type { ResumeActionResult, ResumeDockActions } from './slots.ts'
@@ -75,7 +78,7 @@ export async function apply(ctx: ClientContext): Promise<() => Promise<void>> {
 }
 
 function applySurface(ctx: ClientContext): void {
-  ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'ui-session-resume: dictionaries')
+  ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'session-resume: dictionaries')
 
   ctx.slots.inject('conversation.input.dock', () => ctx.slots.register({
     name: 'conversation.input.dock',

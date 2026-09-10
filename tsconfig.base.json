@@ -23,13 +23,7 @@
     "incremental": true,
     "paths": {
       "@deepseek-ai/dsh-typert-protocol": ["./packages/typert-protocol/src/index.ts"],
-      "@deepseek-ai/dsh-typert-protocol/types": ["./packages/typert-protocol/src/types.ts"],
-      "@mill413/dsh-session-resume": ["./packages/session-resume/src/index.ts"],
-      "@mill413/dsh-session-resume/types": ["./packages/session-resume/src/types.ts"],
-      "@mill413/dsh-session-resume/client": ["./packages/session-resume/src/client.ts"],
-      "@mill413/dsh-session-resume/remote": ["./packages/session-resume/src/index.ts"],
-      "@mill413/dsh-client-ui-session-resume": ["./packages/ui-session-resume/src/index.ts"],
-      "@mill413/dsh-client-ui-session-resume/client": ["./packages/ui-session-resume/src/client/index.ts"]
+      "@deepseek-ai/dsh-typert-protocol/types": ["./packages/typert-protocol/src/types.ts"]
     }
   }
 }

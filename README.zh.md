@@ -19,7 +19,7 @@
 
 当前声明兼容 **DSH `0.1.3-alpha.2`**。其他版本需要另行验证。
 
-插件分为宿主包和 Web 界面包，**两个都要安装到同一个 profile**。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
+插件是单个包，同时包含宿主和 Web 界面两部分。**把它安装到 profile**。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
 
 ### 从本地源码安装
 
@@ -27,16 +27,14 @@
 
 ```sh
 dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
-dsh plugin --profile web add /path/to/dsh-session-resume/packages/ui-session-resume
 ```
 
 ### 从 npm 安装
 
-首次发布完成后，可从 npm 安装。两个包使用相同版本：
+首次发布完成后，可从 npm 安装：
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
 安装后，**重启 DSH Web 进程并刷新页面**。不要手动修改 profile 的 `cordis.patch.yml`；安装命令会应用插件自带的挂载声明。
@@ -50,7 +48,7 @@ dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 
 ### 为什么没有「继续」按钮？
 
-先确认两个包已装入当前 profile，并且已重启 Web、刷新页面。按钮只会在宿主恢复日志后确认存在待续跑的中断轮次时显示；正常完成或主动取消的会话没有按钮是预期行为。
+先确认该包已装入当前 profile，并且已重启 Web、刷新页面。按钮只会在宿主恢复日志后确认存在待续跑的中断轮次时显示；正常完成或主动取消的会话没有按钮是预期行为。
 
 如果点击后出现错误，请检查会话是否已加载，以及是否已在其他页面开始了新一轮。插件会在发送前重新核对会话状态。
 
@@ -69,14 +67,13 @@ npm run build
 node scripts/pack-release.mjs
 ```
 
-最后一步检查包内容并在 `dist/` 生成两个 tarball，不会发布到 npm。
+最后一步检查包内容并在 `dist/` 生成一个 tarball，不会发布到 npm。
 
 更新依赖时使用 `pnpm install` 并提交新的 `pnpm-lock.yaml`；CI 使用 frozen lockfile，防止构建时悄悄改变依赖版本。
 
 | 目录 | 职责 |
 | --- | --- |
-| `packages/session-resume` | 中断状态投影、恢复动作、模型侧提示 |
-| `packages/ui-session-resume` | 输入框上方的继续按钮与中英文文案 |
+| `packages/session-resume` | 中断状态投影、恢复动作、模型侧提示，以及输入框上方的继续按钮与中英文文案 |
 | `packages/typert-protocol` | 构建所需的 Typert 协议源码 |
 | `build` | 客户端打包配置 |
 

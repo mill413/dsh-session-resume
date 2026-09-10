@@ -1,17 +1,16 @@
 # @mill413/dsh-session-resume
 
-**dsh-session-resume** 的宿主包：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。需要 DSH `0.1.3-alpha.2` 和配套 Web 界面包。
+**dsh-session-resume** 插件：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。单个包同时包含宿主部分（中断投影、恢复动作、模型侧提示）和浏览器部分（`./client`，输入框上方的继续条）。需要 DSH `0.1.3-alpha.2`。
 
 ## 安装
 
-包发布到 npm 后，将两个包装入同一个 profile：
+包发布到 npm 后，把它装入 profile：
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
-本地安装时，先构建仓库，再将包名替换为 `packages/session-resume` 和 `packages/ui-session-resume` 的绝对路径。安装后重启 DSH Web 并刷新页面，不要手动修改 profile 的 bundle patch。
+本地安装时，先构建仓库，再使用 `packages/session-resume` 的绝对路径。安装后重启 DSH Web 并刷新页面，不要手动修改 profile 的 bundle patch。
 
 ## 行为
 
@@ -36,7 +35,7 @@ npm run build
 node scripts/pack-release.mjs
 ```
 
-最后一步检查包内容并在 `dist/` 生成两个 tarball，不会发布到 npm。
+最后一步检查包内容并在 `dist/` 生成一个 tarball，不会发布到 npm。
 
 完整安装与排查说明见仓库根目录 README。
 

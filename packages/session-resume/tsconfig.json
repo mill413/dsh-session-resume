@@ -3,9 +3,14 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib/types",
+    "tsBuildInfoFile": "lib/tsconfig.host.tsbuildinfo",
     "paths": {}
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "src/client",
+    "src/css-modules.d.ts"
   ]
 }
