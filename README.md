@@ -17,9 +17,9 @@ The interface follows DSH's Chinese or English language setting. Nothing resumes
 
 ## Install
 
-The current checkout is the unreleased **`0.2.0-dev`** line, verified against **DSH `0.1.5-rc.2`**. Other host versions need separate verification.
+The current release is **`0.2.0`**, verified against **DSH `0.1.5-rc.2`**. Other host versions need separate verification.
 
-This development line ships as one package carrying both the host half and the Web UI half. Its `dsh.client` declaration makes DSH load `./client` automatically, so a local unified build needs only one profile installation. These examples use `web`.
+The plugin ships as one package carrying both the host half and the Web UI half. Its `dsh.client` declaration makes DSH load `./client` automatically, so it needs only one profile installation. These examples use `web`.
 
 ### From a local checkout
 
@@ -31,14 +31,11 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
 
 ### From npm
 
-The npm `latest` release is still `0.1.1`, which predates the single-package merge and targets DSH `0.1.2-alpha.5`. Install both matching legacy packages when using that release:
+Install the unified package from npm:
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-session-resume@0.2.0
 ```
-
-The unified `0.2.0-dev` package is not published. Until it receives a release version and tag, use the local-checkout command above to test it.
 
 After installation, **restart the DSH Web process and refresh the page**. Do not edit the profile's `cordis.patch.yml` manually; the install commands apply the packages' own bundle declarations.
 

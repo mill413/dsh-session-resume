@@ -20,7 +20,7 @@ export function releaseVersion(manifests, tag) {
     throw new Error(`Unsupported release version: ${version}`)
   }
   if (tag !== undefined && tag !== `v${version}`) {
-    throw new Error(`Tag ${tag} must match both package versions: v${version}`)
+    throw new Error(`Tag ${tag} must match the package version: v${version}`)
   }
   return { version, distTag: version.includes('-') ? 'next' : 'latest' }
 }

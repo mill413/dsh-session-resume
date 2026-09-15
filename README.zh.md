@@ -17,9 +17,9 @@
 
 ## 安装
 
-当前 checkout 是尚未发布的 **`0.2.0-dev`** 开发版本，已针对 **DSH `0.1.5-rc.2`** 验证。其他宿主版本需要另行验证。
+当前发布版本是 **`0.2.0`**，已针对 **DSH `0.1.5-rc.2`** 验证。其他宿主版本需要另行验证。
 
-当前开发版本是单个包，同时包含宿主和 Web 界面两部分；其 `dsh.client` 声明会让 DSH 自动加载 `./client`，因此本地统一构建只需安装一次。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
+插件是单个包，同时包含宿主和 Web 界面两部分；其 `dsh.client` 声明会让 DSH 自动加载 `./client`，因此只需安装一次。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
 
 ### 从本地源码安装
 
@@ -31,14 +31,11 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
 
 ### 从 npm 安装
 
-npm 的 `latest` 目前仍是合并前的 `0.1.1`，目标宿主为 DSH `0.1.2-alpha.5`。使用该版本时需要同时安装两个旧版配套包：
+从 npm 安装统一包：
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-session-resume@0.2.0
 ```
-
-统一后的 `0.2.0-dev` 尚未发布；在确定正式版本并创建对应 tag 前，请使用上面的本地源码安装方式进行验证。
 
 安装后，**重启 DSH Web 进程并刷新页面**。不要手动修改 profile 的 `cordis.patch.yml`；安装命令会应用插件自带的挂载声明。
 

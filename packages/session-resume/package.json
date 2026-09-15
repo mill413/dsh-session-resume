@@ -1,7 +1,7 @@
 {
   "name": "@mill413/dsh-session-resume",
   "description": "会话因崩溃或重启中断时，在输入框上方显示「继续」按钮，一键接续该轮任务。",
-  "version": "0.2.0-dev",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },

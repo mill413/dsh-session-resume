@@ -1,19 +1,16 @@
 # @mill413/dsh-session-resume
 
-The **dsh-session-resume** plugin for DeepSeek Harness: it lets you continue a crash-interrupted task with one click. The current unreleased `0.2.0-dev` package carries the host half (interruption projection, resume action, model-facing guidance) and the browser half (`./client`, the composer Continue strip), which DSH discovers through `dsh.client`. This development line is verified against DSH `0.1.5-rc.2`.
+The **dsh-session-resume** plugin for DeepSeek Harness: it lets you continue a crash-interrupted task with one click. Version `0.2.0` carries the host half (interruption projection, resume action, model-facing guidance) and the browser half (`./client`, the composer Continue strip), which DSH discovers through `dsh.client`. This release is verified against DSH `0.1.5-rc.2`.
 
 ## Install
 
-The unified `0.2.0-dev` package has not been published. Build this checkout and install the absolute path to `packages/session-resume` for local testing.
-
-The npm `latest` release is the pre-merge `0.1.1` line for DSH `0.1.2-alpha.5`; it requires both legacy packages:
+Install the unified package into the profile with that installation's DSH CLI:
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
-dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-session-resume@0.2.0
 ```
 
-Restart DSH Web and refresh the page after installation. Do not manually edit the profile's bundle patch.
+For local testing, build this checkout and install the absolute path to `packages/session-resume`. Restart DSH Web and refresh the page after installation. Do not manually edit the profile's bundle patch.
 
 ## Behavior
 
