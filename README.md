@@ -17,9 +17,9 @@ The interface follows DSH's Chinese or English language setting. Nothing resumes
 
 ## Install
 
-Declared compatibility: **DSH `0.1.3-alpha.2`**. Other versions need separate verification.
+The current checkout is the unreleased **`0.2.0-dev`** line, verified against **DSH `0.1.5-rc.2`**. Other host versions need separate verification.
 
-The plugin ships as one package carrying both the host half and the Web UI half. **Install it into the profile**, using the DSH CLI for that installation. These examples use `web`.
+This development line ships as one package carrying both the host half and the Web UI half. Its `dsh.client` declaration makes DSH load `./client` automatically, so a local unified build needs only one profile installation. These examples use `web`.
 
 ### From a local checkout
 
@@ -31,11 +31,14 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
 
 ### From npm
 
-After the first release is published, install the package:
+The npm `latest` release is still `0.1.1`, which predates the single-package merge and targets DSH `0.1.2-alpha.5`. Install both matching legacy packages when using that release:
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
+
+The unified `0.2.0-dev` package is not published. Until it receives a release version and tag, use the local-checkout command above to test it.
 
 After installation, **restart the DSH Web process and refresh the page**. Do not edit the profile's `cordis.patch.yml` manually; the install commands apply the packages' own bundle declarations.
 
@@ -54,12 +57,12 @@ If clicking returns an error, check whether the session is loaded or a new turn 
 
 ## Development
 
-**No Harness source checkout is required.** Development dependencies come from npm, with the DSH SDK pinned to `0.1.3-alpha.2`. Only the local Typert protocol source needed by the generator remains in this repository. Installation, development, and CI do not modify or deploy Harness itself.
+**No Harness source checkout is required.** Development dependencies come from npm, with the DSH SDK pinned to `0.1.5-rc.2`. Only the local Typert protocol source needed by the generator remains in this repository. Installation, development, and CI do not modify or deploy Harness itself.
 
-Use Node.js 24 to match CI, and pnpm `11.3.0` as declared in `packageManager`. Run from the plugin repository root:
+Use Node.js 24 to match CI, and pnpm `11.26.0` as declared in `packageManager`. Run from the plugin repository root:
 
 ```sh
-npm install --global pnpm@11.3.0  # skip if this version is already installed
+npm install --global pnpm@11.26.0  # skip if this version is already installed
 pnpm install --frozen-lockfile
 node --test scripts/release.test.mjs
 npm test

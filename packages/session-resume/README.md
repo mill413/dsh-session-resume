@@ -1,16 +1,19 @@
 # @mill413/dsh-session-resume
 
-The **dsh-session-resume** plugin for DeepSeek Harness: it lets you continue a crash-interrupted task with one click. One package carries the host half (interruption projection, resume action, model-facing guidance) and the browser half (`./client`, the composer Continue strip). Requires DSH `0.1.3-alpha.2`.
+The **dsh-session-resume** plugin for DeepSeek Harness: it lets you continue a crash-interrupted task with one click. The current unreleased `0.2.0-dev` package carries the host half (interruption projection, resume action, model-facing guidance) and the browser half (`./client`, the composer Continue strip), which DSH discovers through `dsh.client`. This development line is verified against DSH `0.1.5-rc.2`.
 
 ## Install
 
-After publication, install the package into the profile using that installation’s DSH CLI:
+The unified `0.2.0-dev` package has not been published. Build this checkout and install the absolute path to `packages/session-resume` for local testing.
+
+The npm `latest` release is the pre-merge `0.1.1` line for DSH `0.1.2-alpha.5`; it requires both legacy packages:
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
 
-For local installation, build the repository and use the absolute path to `packages/session-resume`. Restart DSH Web and refresh the page after installation. Do not manually edit the profile's bundle patch.
+Restart DSH Web and refresh the page after installation. Do not manually edit the profile's bundle patch.
 
 ## Behavior
 
@@ -25,7 +28,7 @@ Manual cancellation, token limits, ordinary errors, blocked turns, and idle goal
 
 ## Development
 
-No Harness source checkout is needed. Use Node.js 24 and pnpm 11.3.0; the SDK development dependencies are pinned npm packages. From the repository root:
+No Harness source checkout is needed. Use Node.js 24 and pnpm 11.26.0; the DSH SDK development dependencies are pinned to 0.1.5-rc.2 npm packages. From the repository root:
 
 ```sh
 pnpm install --frozen-lockfile

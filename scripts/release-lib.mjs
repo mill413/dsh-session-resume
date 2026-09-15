@@ -10,7 +10,7 @@ export function readJson(path) {
 
 export function releaseVersion(manifests, tag) {
   const versions = new Set(manifests.map(pkg => pkg.version))
-  if (versions.size !== 1) throw new Error('Both package versions must match')
+  if (versions.size !== 1) throw new Error('All package versions must match')
   const [version] = versions
   // Releases use x.y.z or x.y.z-prerelease; build metadata is deliberately excluded.
   const number = '(?:0|[1-9][0-9]*)'

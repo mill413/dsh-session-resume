@@ -17,9 +17,9 @@
 
 ## 安装
 
-当前声明兼容 **DSH `0.1.3-alpha.2`**。其他版本需要另行验证。
+当前 checkout 是尚未发布的 **`0.2.0-dev`** 开发版本，已针对 **DSH `0.1.5-rc.2`** 验证。其他宿主版本需要另行验证。
 
-插件是单个包，同时包含宿主和 Web 界面两部分。**把它安装到 profile**。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
+当前开发版本是单个包，同时包含宿主和 Web 界面两部分；其 `dsh.client` 声明会让 DSH 自动加载 `./client`，因此本地统一构建只需安装一次。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
 
 ### 从本地源码安装
 
@@ -31,11 +31,14 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
 
 ### 从 npm 安装
 
-首次发布完成后，可从 npm 安装：
+npm 的 `latest` 目前仍是合并前的 `0.1.1`，目标宿主为 DSH `0.1.2-alpha.5`。使用该版本时需要同时安装两个旧版配套包：
 
 ```sh
 dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
+dsh plugin --profile web add @mill413/dsh-client-ui-session-resume@0.1.1
 ```
+
+统一后的 `0.2.0-dev` 尚未发布；在确定正式版本并创建对应 tag 前，请使用上面的本地源码安装方式进行验证。
 
 安装后，**重启 DSH Web 进程并刷新页面**。不要手动修改 profile 的 `cordis.patch.yml`；安装命令会应用插件自带的挂载声明。
 
@@ -54,12 +57,12 @@ dsh plugin --profile web add @mill413/dsh-session-resume@0.1.1
 
 ## 开发
 
-**不需要 Harness 源码目录。** 开发依赖直接从 npm 安装，DSH SDK 固定到 `0.1.3-alpha.2`；仅保留本仓库内构建所需的 Typert 协议源码。安装、开发和 CI 都不需要修改或部署 Harness 本体。
+**不需要 Harness 源码目录。** 开发依赖直接从 npm 安装，DSH SDK 固定到 `0.1.5-rc.2`；仅保留本仓库内构建所需的 Typert 协议源码。安装、开发和 CI 都不需要修改或部署 Harness 本体。
 
-建议使用 Node.js 24（与 CI 一致），以及 `packageManager` 指定的 pnpm `11.3.0`。在插件仓库根目录执行：
+建议使用 Node.js 24（与 CI 一致），以及 `packageManager` 指定的 pnpm `11.26.0`。在插件仓库根目录执行：
 
 ```sh
-npm install --global pnpm@11.3.0  # 已安装对应版本时可跳过
+npm install --global pnpm@11.26.0  # 已安装对应版本时可跳过
 pnpm install --frozen-lockfile
 node --test scripts/release.test.mjs
 npm test
