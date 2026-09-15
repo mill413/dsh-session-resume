@@ -1,7 +1,7 @@
 {
   "name": "dsh-session-resume",
   "private": true,
-  "packageManager": "pnpm@11.3.0",
+  "packageManager": "pnpm@11.26.0",
   "type": "module",
   "description": "DSH plugin: an interrupted (restart-torn) session shows a 'continue' button; clicking it resumes the turn without the user typing a message.",
   "scripts": {
