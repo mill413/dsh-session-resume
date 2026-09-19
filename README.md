@@ -86,3 +86,7 @@ On click, the host rechecks the log, prepends safety guidance to `next-turn`, an
 ## License
 
 [MIT](LICENSE). Extracted Harness build support is attributed in [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## 0.1.6-alpha.2 compatibility
+
+Development SDKs are pinned to npm 0.1.6-alpha.2. The published UI primitives omit runtime dependencies from their manifest; the independent test environment explicitly supplies `clsx`, `simple-icons` and `diff` alongside its Markdown dependencies. No harness checkout is used.
