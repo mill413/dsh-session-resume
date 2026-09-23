@@ -1,6 +1,6 @@
 # @mill413/dsh-session-resume
 
-**dsh-session-resume** 插件：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。`0.4.0` 单包同时包含宿主部分（中断投影、恢复动作、模型侧提示）和浏览器部分（`./client`，输入框上方的继续条），DSH 通过 `dsh.client` 自动发现浏览器入口。该版本已针对 DSH `0.1.7-alpha.2` 验证。
+**dsh-session-resume** 插件：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。`0.4.0` 单包同时包含宿主部分（中断投影、恢复动作、模型侧提示）和浏览器部分（`./client`，输入框上方的继续条），DSH 通过 `dsh.client` 自动发现浏览器入口。该版本已针对 DSH `0.1.7-rc.1` 验证。
 
 ## 安装
 
@@ -25,7 +25,7 @@ dsh plugin --profile web add @mill413/dsh-session-resume@0.4.0
 
 ## 开发
 
-不需要 Harness 源码目录。使用 Node.js 24 和 pnpm 11.26.0，DSH SDK 开发依赖固定为 npm 发布的 0.1.7-alpha.2。在插件仓库根目录执行：
+不需要 Harness 源码目录。使用 Node.js 24 和 pnpm 11.26.0，DSH SDK 开发依赖固定为 npm 发布的 0.1.7-rc.1。在插件仓库根目录执行：
 
 ```sh
 pnpm install --frozen-lockfile
