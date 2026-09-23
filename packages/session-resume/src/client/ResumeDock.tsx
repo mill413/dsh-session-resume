@@ -9,7 +9,7 @@
  */
 
 import { useCallback, useState } from 'react'
-import { IconPlayOutline16 } from '@deepseek-ai/dsh-client-ui-primitives'
+import { IconPlayOutlineRegular } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
 import type { ResumeActionResult, ResumeDockActions } from './slots.ts'
 import css from './ResumeDock.module.css'
@@ -45,7 +45,7 @@ export function ResumeDockBar({ interruptedTurn, onResume, t }: ResumeDockBarPro
   return (
     <div className={css.dock} data-session-resume-dock>
       <div className={css.bar}>
-        <span className={css.icon} aria-hidden="true"><IconPlayOutline16 size={14} /></span>
+        <span className={css.icon} aria-hidden="true"><IconPlayOutlineRegular size={14} /></span>
         <span className={css.label}>{t('interrupted.label')}</span>
         {actionError !== null
           ? <span className={css.error} role="alert">{actionError}</span>

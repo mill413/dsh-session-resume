@@ -11,10 +11,19 @@
  */
 
 import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { UserMessage } from '@deepseek-ai/dsh-llm'
+import type { ContextFormed, UserMessage } from '@deepseek-ai/dsh-llm'
 
 /** Stable producer identity recorded on every continuation message. */
 export const resumeProducerName = 'session-resume'
+
+declare module '@deepseek-ai/dsh-llm' {
+  interface MessageSourceMap {
+    /** Interrupted-turn continuation notices; readers preserve the content without this producer.
+     * @persistenceAttribution
+     */
+    'session-resume': { kind: 'session-resume' } & ContextFormed
+  }
+}
 
 /** Model-facing lead: names the interruption and tells the model to continue. */
 const RESUME_LEAD =
@@ -40,7 +49,7 @@ const RESUME_DETAIL_SUMMARY = 'Resume guidance'
 export function buildResumeMessage(): UserMessage {
   return createUserMessage({
     content: [{ type: 'text', text: RESUME_LEAD }],
-    source: { kind: 'plugin', plugin: resumeProducerName, form: 'notice', summary: RESUME_SUMMARY },
+    source: { kind: resumeProducerName, form: 'notice', summary: RESUME_SUMMARY },
   })
 }
 
@@ -53,6 +62,6 @@ export function buildResumeMessage(): UserMessage {
 export function buildResumeDetail(): UserMessage {
   return createUserMessage({
     content: [{ type: 'text', text: RESUME_DETAIL }],
-    source: { kind: 'plugin', plugin: resumeProducerName, form: 'notice', summary: RESUME_DETAIL_SUMMARY },
+    source: { kind: resumeProducerName, form: 'notice', summary: RESUME_DETAIL_SUMMARY },
   })
 }

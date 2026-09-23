@@ -22,17 +22,17 @@ function fixture(events: SessionEvent[], live = true) {
 }
 
 describe('resume action', () => {
-  it('adds plugin guidance ahead of queued input and wakes the requested agent', () => {
+  it('adds producer guidance ahead of queued input and wakes the requested agent', () => {
     const f = fixture([interrupted])
     expect(f.resume()).toEqual({ resumedTurn: 1 })
     expect(f.get).toHaveBeenCalledWith(sessionId)
     expect(f.prepend).toHaveBeenCalledWith('next-turn', expect.objectContaining({
-      source: expect.objectContaining({ kind: 'plugin', form: 'notice' }),
+      source: expect.objectContaining({ kind: 'session-resume', form: 'notice' }),
     }))
     expect(f.queue[1]).toBe(f.queued)
     expect(f.steer).toHaveBeenCalledOnce()
     expect(f.steer).toHaveBeenCalledWith(expect.objectContaining({
-      source: expect.objectContaining({ kind: 'plugin', form: 'notice' }),
+      source: expect.objectContaining({ kind: 'session-resume', form: 'notice' }),
     }))
     expect(f.prepend.mock.invocationCallOrder[0]).toBeLessThan(f.steer.mock.invocationCallOrder[0]!)
   })

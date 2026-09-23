@@ -7,12 +7,13 @@ import { describe, expect, it } from 'vitest'
 import { buildResumeMessage, resumeProducerName } from '../src/resume.ts'
 
 describe('buildResumeMessage', () => {
-  it('returns a frozen user-role plugin notice with a short summary', () => {
+  it('returns a frozen user-role producer notice with a short summary', () => {
     const message = buildResumeMessage()
     expect(message.role).toBe('user')
+    // Session format V4 removed the shared `plugin` source kind: each producer
+    // declares its own kind in its own module.
     expect(message.source).toMatchObject({
-      kind: 'plugin',
-      plugin: resumeProducerName,
+      kind: resumeProducerName,
       form: 'notice',
     })
     expect(typeof message.source.summary).toBe('string')
