@@ -23,6 +23,7 @@
     "vite": "^7.0.0",
     "clsx": "2.1.1",
     "simple-icons": "16.31.0",
-    "diff": "9.0.0"
+    "diff": "9.0.0",
+    "@deepseek-ai/dsh-util-code-language": "0.1.7-rc.2"
   }
 }

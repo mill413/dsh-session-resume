@@ -1,6 +1,6 @@
 # @mill413/dsh-session-resume
 
-The **dsh-session-resume** plugin for DeepSeek Harness: it lets you continue a crash-interrupted task with one click. Version `0.4.0` carries the host half (interruption projection, resume action, model-facing guidance) and the browser half (`./client`, the composer Continue strip), which DSH discovers through `dsh.client`. This release is verified against DSH `0.1.7-rc.1`.
+The **dsh-session-resume** plugin for DeepSeek Harness: it lets you continue a crash-interrupted task with one click. Version `0.4.0` carries the host half (interruption projection, resume action, model-facing guidance) and the browser half (`./client`, the composer Continue strip), which DSH discovers through `dsh.client`. This release is verified against DSH `0.1.7-rc.2`.
 
 ## Install
 
@@ -25,7 +25,7 @@ Manual cancellation, token limits, ordinary errors, blocked turns, and idle goal
 
 ## Development
 
-No Harness source checkout is needed. Use Node.js 24 and pnpm 11.26.0; the DSH SDK development dependencies are pinned to 0.1.7-rc.1 npm packages. From the repository root:
+No Harness source checkout is needed. Use Node.js 24 and pnpm 11.26.0; the DSH SDK development dependencies are pinned to 0.1.7-rc.2 npm packages. From the repository root:
 
 ```sh
 pnpm install --frozen-lockfile
