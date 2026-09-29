@@ -35,7 +35,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@deepseek-ai/dsh-invariants": "0.1.7-rc.2",
+    "@deepseek-ai/dsh-invariants": "0.2.0-rc.1",
     "@deepseek-ai/cordis": "4.0.4",
     "tsdown": "^0.22.2",
     "typescript": "^6.0.3",
