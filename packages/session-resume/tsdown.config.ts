@@ -6,7 +6,7 @@ import { clientBundle } from '../../build/client-bundle.ts'
 // so it must run after the host phase.
 export default clientBundle(
   '@mill413/dsh-session-resume',
-  ['lib/types/index.js', 'lib/types/invariant.js'],
+  ['lib/types/index.js'],
   {
     hostPhase: true,
     lib: { plugins: [typertPlugin({ mode: 'workspace', faces: ['host'] })] },

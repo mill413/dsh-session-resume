@@ -16,10 +16,6 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./types": {
       "types": "./lib/types/types.d.ts",
       "default": "./lib/types/types.js"
@@ -29,20 +25,17 @@
   },
   "files": [
     "lib/index.js",
-    "lib/invariant.js",
     "lib/types/**/*.js",
     "lib/types/**/*.d.ts"
   ],
   "license": "MIT",
   "devDependencies": {
-    "@deepseek-ai/dsh-invariants": "0.2.0-rc.2",
-    "@deepseek-ai/cordis": "4.0.4",
+    "@deepseek-ai/cordis": "4.0.5-alpha.1",
     "tsdown": "^0.22.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8"
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-invariants": "*",
     "@deepseek-ai/cordis": "*"
   }
 }

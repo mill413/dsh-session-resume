@@ -14,10 +14,6 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./types": {
       "types": "./lib/types/types.d.ts",
       "default": "./lib/types/types.js"
@@ -41,7 +37,6 @@
   },
   "files": [
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/client.js.map",
     "lib/types/**/*.js",
@@ -71,7 +66,7 @@
     },
     "compatibility": {
       "dshReleases": [
-        "0.2.0-rc.2"
+        "0.2.1-alpha.2"
       ]
     }
   },
@@ -85,7 +80,6 @@
     "@deepseek-ai/dsh-client-ui-renderer": "*",
     "@deepseek-ai/dsh-client-ui-session": "*",
     "@deepseek-ai/dsh-client-ui-slots": "*",
-    "@deepseek-ai/dsh-invariants": "*",
     "@deepseek-ai/dsh-llm": "*",
     "@deepseek-ai/dsh-session": "*",
     "@deepseek-ai/dsh-session-projection": "*",
@@ -97,26 +91,25 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "4.0.4",
-    "@deepseek-ai/cordis-plugin-include": "1.0.9",
-    "@deepseek-ai/cordis-plugin-loader": "1.0.5",
-    "@deepseek-ai/dsh-agent": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-api-remotes": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-locale": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-conversation": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-primitives": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-renderer": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-session": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-slots": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-store": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-invariants": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-session": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-session-projection": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-typert-generator": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-typert-protocol": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-util-workspace-path": "0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "3.18.4",
+    "@deepseek-ai/cordis": "4.0.5-alpha.1",
+    "@deepseek-ai/cordis-plugin-include": "1.0.10-alpha.1",
+    "@deepseek-ai/cordis-plugin-loader": "1.0.6-alpha.1",
+    "@deepseek-ai/dsh-agent": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-api-remotes": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-client-locale": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-client-ui-renderer": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-client-ui-session": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-client-ui-slots": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-client-store": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-llm": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-session": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-session-projection": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-typert-generator": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.1-alpha.2",
+    "@deepseek-ai/dsh-util-workspace-path": "0.2.1-alpha.2",
+    "@deepseek-ai/schemastery": "3.18.5-alpha.1",
     "@shikijs/langs": "^4.3.1",
     "@testing-library/react": "^16.1.0",
     "@types/react": "~18.3.1",
