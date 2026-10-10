@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Session resume">
+  <circle cx="128" cy="128" r="88" fill="none" stroke="#7C6BF5" stroke-width="18" stroke-linecap="round" stroke-dasharray="431 122" transform="rotate(-100 128 128)"/>
+  <path d="M114 94 L178 128 L114 162 Z" fill="#3A2AA8" stroke="#3A2AA8" stroke-width="12" stroke-linejoin="round"/>
+</svg>

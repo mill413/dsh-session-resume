@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Session Resume",
+    "description": "Show a Continue button above the input when a crash or restart interrupted a task."
+  }
+}
