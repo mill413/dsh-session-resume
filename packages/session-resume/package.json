@@ -1,6 +1,6 @@
 {
   "name": "@mill413/dsh-session-resume",
-  "description": "会话因崩溃或重启中断时，在输入框上方显示「继续」按钮，一键接续该轮任务。",
+  "description": "会话因崩溃或重启中断时，在输入框上方提供「继续」按钮接续该轮任务。",
   "version": "0.4.0",
   "publishConfig": {
     "access": "public"
@@ -66,7 +66,7 @@
     },
     "compatibility": {
       "dshReleases": [
-        "0.2.1-alpha.2"
+        "0.2.1-alpha.5"
       ]
     }
   },
@@ -91,25 +91,25 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "4.0.5-alpha.1",
-    "@deepseek-ai/cordis-plugin-include": "1.0.10-alpha.1",
-    "@deepseek-ai/cordis-plugin-loader": "1.0.6-alpha.1",
-    "@deepseek-ai/dsh-agent": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-api-remotes": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-client-locale": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-client-ui-conversation": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-client-ui-primitives": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-client-ui-renderer": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-client-ui-session": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-client-ui-slots": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-client-store": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-llm": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-session": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-session-projection": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-typert-generator": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-typert-protocol": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-util-workspace-path": "0.2.1-alpha.2",
-    "@deepseek-ai/schemastery": "3.18.5-alpha.1",
+    "@deepseek-ai/cordis": "4.0.5-alpha.2",
+    "@deepseek-ai/cordis-plugin-include": "1.0.10-alpha.2",
+    "@deepseek-ai/cordis-plugin-loader": "1.0.6-alpha.2",
+    "@deepseek-ai/dsh-agent": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-api-remotes": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-client-locale": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-client-ui-renderer": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-client-ui-session": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-client-ui-slots": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-client-store": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-llm": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-session": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-session-projection": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-typert-generator": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.1-alpha.5",
+    "@deepseek-ai/dsh-util-workspace-path": "0.2.1-alpha.5",
+    "@deepseek-ai/schemastery": "3.18.5-alpha.2",
     "@shikijs/langs": "^4.3.1",
     "@testing-library/react": "^16.1.0",
     "@types/react": "~18.3.1",

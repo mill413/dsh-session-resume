@@ -1,4 +1,4 @@
-import { typertPlugin } from '@deepseek-ai/dsh-typert-generator/tsdown'
+import { typertWorkspacePlugin } from '../../build/typert-workspace.ts'
 import { clientBundle } from '../../build/client-bundle.ts'
 
 // The host phase emits lib/index.js plus the generated Typert faces; the client
@@ -9,6 +9,6 @@ export default clientBundle(
   ['lib/types/index.js'],
   {
     hostPhase: true,
-    lib: { plugins: [typertPlugin({ mode: 'workspace', faces: ['host'] })] },
+    lib: { plugins: [typertWorkspacePlugin(['host'])] },
   },
 )
