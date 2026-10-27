@@ -86,4 +86,3 @@ On click, the host rechecks the log, prepends safety guidance to `next-turn`, an
 ## License
 
 [MIT](LICENSE). Extracted Harness build support is attributed in [third-party notices](THIRD_PARTY_NOTICES.md).
-
