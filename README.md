@@ -17,7 +17,7 @@ The interface follows DSH's Chinese or English language setting. Nothing resumes
 
 ## Install
 
-The current release is **`0.4.0`**, verified against **DSH `0.2.1-alpha.2`**. Other host versions need separate verification.
+The current release is **`0.4.2`**, verified against **DSH `0.2.1-rc.2`**. Other host versions need separate verification.
 
 The plugin ships as one package carrying both the host half and the Web UI half. Its `dsh.client` declaration makes DSH load `./client` automatically, so it needs only one profile installation. These examples use `web`.
 
@@ -34,7 +34,7 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
 Install the unified package from npm:
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.4.0
+dsh plugin --profile web add @mill413/dsh-session-resume@0.4.2
 ```
 
 After installation, **restart the DSH Web process and refresh the page**. Do not edit the profile's `cordis.patch.yml` manually; the install commands apply the packages' own bundle declarations.
@@ -54,7 +54,7 @@ If clicking returns an error, check whether the session is loaded or a new turn 
 
 ## Development
 
-**No Harness source checkout is required.** Development dependencies come from npm, with the DSH SDK pinned to `0.2.1-alpha.2`. Only the local Typert protocol source needed by the generator remains in this repository. Installation, development, and CI do not modify or deploy Harness itself.
+**No Harness source checkout is required.** Development dependencies come from npm, with the DSH SDK pinned to `0.2.1-rc.2`. Only the local Typert protocol source needed by the generator remains in this repository. Installation, development, and CI do not modify or deploy Harness itself.
 
 Use Node.js 24 to match CI, and pnpm `11.26.0` as declared in `packageManager`. Run from the plugin repository root:
 
@@ -87,11 +87,3 @@ On click, the host rechecks the log, prepends safety guidance to `next-turn`, an
 
 [MIT](LICENSE). Extracted Harness build support is attributed in [third-party notices](THIRD_PARTY_NOTICES.md).
 
-## 0.1.7-rc.1 compatibility
-
-Development SDKs are pinned to npm 0.1.7-rc.1. The published UI primitives omit runtime dependencies from their manifest; the independent test environment explicitly supplies `clsx`, `simple-icons` and `diff` alongside its Markdown dependencies. No harness checkout is used.
-
-## DSH 0.2.1-alpha.2 compatibility
-
-The SDK development dependencies are pinned to npm `0.2.1-alpha.2`; shared runtime packages remain peers. Verified with a frozen install, repository checks and packaging in an isolated directory.
-The published UI primitives import `@deepseek-ai/dsh-util-code-language` without declaring it; this repository explicitly supplies version `0.2.1-alpha.2` for the browser test environment.

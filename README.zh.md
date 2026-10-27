@@ -17,7 +17,7 @@
 
 ## 安装
 
-当前发布版本是 **`0.4.0`**，已针对 **DSH `0.1.7-rc.1`** 验证。其他宿主版本需要另行验证。
+当前发布版本是 **`0.4.2`**，已针对 **DSH `0.2.1-rc.2`** 验证。其他宿主版本需要另行验证。
 
 插件是单个包，同时包含宿主和 Web 界面两部分；其 `dsh.client` 声明会让 DSH 自动加载 `./client`，因此只需安装一次。以下以 `web` 为例，使用运行该 profile 的 DSH CLI。
 
@@ -34,7 +34,7 @@ dsh plugin --profile web add /path/to/dsh-session-resume/packages/session-resume
 从 npm 安装统一包：
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.4.0
+dsh plugin --profile web add @mill413/dsh-session-resume@0.4.2
 ```
 
 安装后，**重启 DSH Web 进程并刷新页面**。不要手动修改 profile 的 `cordis.patch.yml`；安装命令会应用插件自带的挂载声明。
@@ -54,7 +54,7 @@ dsh plugin --profile web add @mill413/dsh-session-resume@0.4.0
 
 ## 开发
 
-**不需要 Harness 源码目录。** 开发依赖直接从 npm 安装，DSH SDK 固定到 `0.1.7-rc.1`；仅保留本仓库内构建所需的 Typert 协议源码。安装、开发和 CI 都不需要修改或部署 Harness 本体。
+**不需要 Harness 源码目录。** 开发依赖直接从 npm 安装，DSH SDK 固定到 `0.2.1-rc.2`；仅保留本仓库内构建所需的 Typert 协议源码。安装、开发和 CI 都不需要修改或部署 Harness 本体。
 
 建议使用 Node.js 24（与 CI 一致），以及 `packageManager` 指定的 pnpm `11.26.0`。在插件仓库根目录执行：
 

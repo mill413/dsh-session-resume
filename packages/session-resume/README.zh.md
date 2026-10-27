@@ -1,13 +1,13 @@
 # @mill413/dsh-session-resume
 
-**dsh-session-resume** 插件：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。`0.4.0` 单包同时包含宿主部分（中断投影、恢复动作、模型侧提示）和浏览器部分（`./client`，输入框上方的继续条），DSH 通过 `dsh.client` 自动发现浏览器入口。该版本已针对 DSH `0.1.7-rc.1` 验证。
+**dsh-session-resume** 插件：让 DeepSeek Harness 中因进程意外退出而中断的任务，可以点击「继续」恢复。`0.4.2` 单包同时包含宿主部分（中断投影、恢复动作、模型侧提示）和浏览器部分（`./client`，输入框上方的继续条），DSH 通过 `dsh.client` 自动发现浏览器入口。该版本已针对 DSH `0.2.1-rc.2` 验证。
 
 ## 安装
 
 使用当前 DSH CLI 把统一包安装到 profile：
 
 ```sh
-dsh plugin --profile web add @mill413/dsh-session-resume@0.4.0
+dsh plugin --profile web add @mill413/dsh-session-resume@0.4.2
 ```
 
 本地验证时请先构建当前 checkout，再把 `packages/session-resume` 的绝对路径装入 profile。安装后重启 DSH Web 并刷新页面，不要手动修改 profile 的 bundle patch。
@@ -25,7 +25,7 @@ dsh plugin --profile web add @mill413/dsh-session-resume@0.4.0
 
 ## 开发
 
-不需要 Harness 源码目录。使用 Node.js 24 和 pnpm 11.26.0，DSH SDK 开发依赖固定为 npm 发布的 0.1.7-rc.1。在插件仓库根目录执行：
+不需要 Harness 源码目录。使用 Node.js 24 和 pnpm 11.26.0，DSH SDK 开发依赖固定为 npm 发布的 0.2.1-rc.2。在插件仓库根目录执行：
 
 ```sh
 pnpm install --frozen-lockfile
@@ -37,7 +37,7 @@ node scripts/pack-release.mjs
 
 最后一步检查包内容并在 `dist/` 生成一个 tarball，不会发布到 npm。
 
-完整安装与排查说明见仓库根目录 README。
+完整安装与排查说明见[仓库根目录 README](../../README.zh.md)。
 
 ## 许可
 
